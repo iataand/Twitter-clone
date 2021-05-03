@@ -1,8 +1,10 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import AuthProvider, { useAuth } from "../contexts/AuthContext";
+import { Link, useHistory } from "react-router-dom";
 
-export default function Signup() {
+export default function Login() {
+  const history = useHistory();
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();
@@ -16,6 +18,7 @@ export default function Signup() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
+      history.push("/feed");
     } catch {
       setError("Failed to log in");
     }
@@ -52,7 +55,9 @@ export default function Signup() {
         </Form>
       </Card>
 
-      <div className="w-100 text-center mt-2">Already have an account?</div>
+      <div className="w-100 text-center mt-2">
+        Don't have an account? <Link to="/register">Register</Link>
+      </div>
     </AuthProvider>
   );
 }

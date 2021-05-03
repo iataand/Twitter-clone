@@ -18,19 +18,24 @@ export default function AuthProvider({ children }) {
     return auth.signInWithEmailAndPassword(email, password);
   };
 
+  const logout = () => {
+    return auth.signOut();
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
 
-    return unsubscribe;
+    return unsubscribe; //will execute when the component unmounts
   }, []);
 
-  const value = {
+  const states = {
     currentUser,
     register,
     login,
+    logout,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={states}>{children}</AuthContext.Provider>;
 }

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import AuthProvider, { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
   const emailRef = useRef();
@@ -18,7 +19,6 @@ export default function Signup() {
       : setError("");
 
     try {
-      setError("");
       setLoading(true);
       await register(emailRef.current.value, passwordRef.current.value);
     } catch (err) {
@@ -66,7 +66,9 @@ export default function Signup() {
         </Form>
       </Card>
 
-      <div className="w-100 text-center mt-2">Already have an account?</div>
+      <div className="w-100 text-center mt-2">
+        Already have an account? <Link to={"login"}> Log in </Link>
+      </div>
     </AuthProvider>
   );
 }
