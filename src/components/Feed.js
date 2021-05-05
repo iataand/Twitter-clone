@@ -6,13 +6,14 @@ import AuthProvider from "../contexts/AuthContext";
 import DatabaseProvider, { useDatabase } from "../contexts/DataBaseContext";
 
 export default function Feed() {
-  const { getPostsFromDatabase } = useDatabase();
+  const { postsRef } = useDatabase();
   const [posts, setPosts] = useState();
 
   useEffect(() => {
-    getPostsFromDatabase().then((response) =>
-      setPosts(Object.entries(response))
-    );
+    postsRef.on("value", (snapshot) => {
+      const data = snapshot.val();
+      setPosts(Object.entries(data));
+    });
   }, []);
 
   return (

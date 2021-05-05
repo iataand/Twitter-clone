@@ -8,7 +8,7 @@ export const useDatabase = () => {
 };
 
 export default function DatabaseProvider({ children }) {
-  const post = (post) => {
+  const addPostToDatabase = (post) => {
     return database.ref("posts").push(post);
   };
 
@@ -30,17 +30,12 @@ export default function DatabaseProvider({ children }) {
       });
   };
 
-  const updatePosts = () => {
-    const postsRef = database.ref("posts");
-    return postsRef.on("child_added", (snapshot) => {
-      const data = snapshot.val();
-      return data;
-    });
-  };
+  const postsRef = database.ref("posts");
 
   const states = {
-    post,
+    addPostToDatabase,
     getPostsFromDatabase,
+    postsRef,
   };
 
   return (

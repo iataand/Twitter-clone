@@ -12,7 +12,7 @@ function App() {
         <DataBaseContext>
           <Route path="/register" component={Register}></Route>
           <Route path="/login" component={Login}></Route>
-          <Route path="/" component={Feed}></Route>
+          <Route path="/feed" component={Feed}></Route>
         </DataBaseContext>
       </AuthContext>
     </BrowserRouter>

@@ -1,11 +1,10 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { BsFillChatSquareFill } from "react-icons/bs";
 import { BsHeart } from "react-icons/bs";
 
 export default function Post({ text, user }) {
   return (
-    // <div className="w-100 border p-2 m-2" style={{ maxWidth: "560px" }}>
     <Form className="border m-1">
       <Form.Group className="d-flex">
         <img
@@ -19,16 +18,23 @@ export default function Post({ text, user }) {
           className="text-wrap  text-break"
           style={{ maxWidth: "465px" }}
         >
+          <p>
+            <b>{user}</b>
+          </p>
           <p>{text}</p>
         </Form.Text>
         <hr />
       </Form.Group>
-
+      <hr></hr>
       <Form.Group className="d-flex justify-content-around">
-        <BsFillChatSquareFill></BsFillChatSquareFill>
-        <BsHeart></BsHeart>
+        <button className="btn btn-dark btn-outline-light btn-sm">
+          <BsFillChatSquareFill></BsFillChatSquareFill>
+        </button>
+
+        <button className="btn btn-dark btn-outline-light btn-sm">
+          <BsHeart></BsHeart>
+        </button>
       </Form.Group>
     </Form>
-    // </div>
   );
 }

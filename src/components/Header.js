@@ -5,21 +5,30 @@ import { useDatabase } from "../contexts/DataBaseContext";
 
 export default function Header() {
   const { currentUser } = useAuth();
+  const { addPostToDatabase } = useDatabase();
   const postTextRef = useRef();
-  const { post } = useDatabase();
+
+  const post = {
+    user: "",
+    text: "",
+    likes: 0,
+    likedBy: [],
+  };
 
   function handlePost(e) {
     e.preventDefault();
 
+    post.user = currentUser.email;
+    post.text = postTextRef.current.value;
+
     try {
-      post({ user: currentUser.email, text: postTextRef.current.value });
+      addPostToDatabase(post);
     } catch {
       console.log("post failed");
     }
   }
 
   return (
-    // <div className="w- 100 border" style={{ maxWidth: "560px" }}>
     <Form onSubmit={handlePost}>
       <Form.Group id="postTextRef">
         <div className="d-flex">
@@ -36,7 +45,10 @@ export default function Header() {
           />
         </div>
         <hr />
-        <Button className="d-flex justify-content-end" type="submit">
+        <Button
+          className="d-flex justify-content-end btn btn-dark"
+          type="submit"
+        >
           Post
         </Button>
       </Form.Group>
