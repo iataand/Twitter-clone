@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Container } from "react-bootstrap";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Form, Card, Alert } from "react-bootstrap";
 import AuthProvider, { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
@@ -54,9 +54,13 @@ export default function Login() {
               </Form.Group>
 
               <Form.Group>
-                <Button className="w-100" disabled={loading} type="submit">
+                <button
+                  className="w-100 btn btn-dark"
+                  disabled={loading}
+                  type="submit"
+                >
                   Log In
-                </Button>
+                </button>
               </Form.Group>
             </Form>
           </Card>

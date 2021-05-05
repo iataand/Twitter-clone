@@ -8,6 +8,8 @@ export const useDatabase = () => {
 };
 
 export default function DatabaseProvider({ children }) {
+  const postsRef = database.ref("posts");
+
   const addPostToDatabase = (post) => {
     return database.ref("posts").push(post);
   };
@@ -30,12 +32,15 @@ export default function DatabaseProvider({ children }) {
       });
   };
 
-  const postsRef = database.ref("posts");
+  const addCommToPost = (postId, comment) => {
+    return database.ref("posts").child(`${postId}/comments`).push(comment);
+  };
 
   const states = {
     addPostToDatabase,
     getPostsFromDatabase,
     postsRef,
+    addCommToPost,
   };
 
   return (

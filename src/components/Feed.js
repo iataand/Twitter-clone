@@ -11,8 +11,10 @@ export default function Feed() {
 
   useEffect(() => {
     postsRef.on("value", (snapshot) => {
-      const data = snapshot.val();
-      setPosts(Object.entries(data));
+      if (snapshot.val()) {
+        const data = snapshot.val();
+        setPosts(Object.entries(data));
+      }
     });
   }, []);
 
@@ -20,12 +22,19 @@ export default function Feed() {
     <>
       <AuthProvider>
         <DatabaseProvider>
-          <Container className="w-100 border p-2" style={{ maxWidth: "560px" }}>
+          <Container className="w-100 border p-1" style={{ maxWidth: "600px" }}>
             <Header></Header>
 
             {posts &&
               posts.map((post) => {
-                return <Post text={post[1].text} user={post[1].user}></Post>;
+                return (
+                  <Post
+                    key={post[0]}
+                    postId={post[0]}
+                    text={post[1].text}
+                    user={post[1].user}
+                  ></Post>
+                );
               })}
           </Container>
         </DatabaseProvider>

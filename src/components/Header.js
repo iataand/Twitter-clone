@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useDatabase } from "../contexts/DataBaseContext";
 
@@ -13,6 +13,7 @@ export default function Header() {
     text: "",
     likes: 0,
     likedBy: [],
+    comments: {},
   };
 
   function handlePost(e) {
@@ -23,6 +24,7 @@ export default function Header() {
 
     try {
       addPostToDatabase(post);
+      postTextRef.current.value = "";
     } catch {
       console.log("post failed");
     }
@@ -42,15 +44,16 @@ export default function Header() {
             type="text"
             ref={postTextRef}
             placeholder=" What's happening?"
+            required
+            className="p-2"
           />
         </div>
         <hr />
-        <Button
-          className="d-flex justify-content-end btn btn-dark"
-          type="submit"
-        >
-          Post
-        </Button>
+        <div className="d-flex justify-content-end">
+          <button className="btn btn-dark mr-1" type="submit">
+            Post
+          </button>
+        </div>
       </Form.Group>
     </Form>
   );
