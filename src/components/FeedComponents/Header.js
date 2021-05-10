@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Form } from "react-bootstrap";
-import { useAuth } from "../contexts/AuthContext";
-import { useDatabase } from "../contexts/DataBaseContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { useDatabase } from "../../contexts/DataBaseContext";
 
 export default function Header() {
   const { currentUser } = useAuth();
@@ -16,7 +16,7 @@ export default function Header() {
     comments: {},
   };
 
-  function handlePost(e) {
+  const handlePost = (e) => {
     e.preventDefault();
 
     post.user = currentUser.email;
@@ -28,7 +28,7 @@ export default function Header() {
     } catch {
       console.log("post failed");
     }
-  }
+  };
 
   return (
     <Form onSubmit={handlePost}>

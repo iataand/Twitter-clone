@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import Post from "./Post";
+import Post from "../PostComponents/Post";
 import { Container } from "react-bootstrap";
-import AuthProvider from "../contexts/AuthContext";
-import DatabaseProvider, { useDatabase } from "../contexts/DataBaseContext";
+import AuthProvider from "../../contexts/AuthContext";
+import DatabaseProvider, { useDatabase } from "../../contexts/DataBaseContext";
 
 export default function Feed() {
-  const { postsRef } = useDatabase();
+  const { dbRef } = useDatabase();
   const [posts, setPosts] = useState();
 
   useEffect(() => {
-    postsRef.on("value", (snapshot) => {
+    dbRef.on("value", (snapshot) => {
       if (snapshot.val()) {
         const data = snapshot.val();
         setPosts(Object.entries(data));
@@ -24,7 +24,6 @@ export default function Feed() {
         <DatabaseProvider>
           <Container className="w-100 border p-1" style={{ maxWidth: "600px" }}>
             <Header></Header>
-
             {posts &&
               posts.map((post) => {
                 return (

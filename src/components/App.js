@@ -1,9 +1,9 @@
 import { Route, BrowserRouter } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
 import DataBaseContext from "../contexts/DataBaseContext";
-import Register from "./Register.js";
-import Login from "./Login.js";
-import Feed from "./Feed.js";
+import Register from "./LandingPageComponents/Register.js";
+import Login from "./LandingPageComponents/Login.js";
+import Feed from "./FeedComponents/Feed.js";
 
 function App() {
   return (

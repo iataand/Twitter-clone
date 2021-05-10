@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Form, Card, Alert } from "react-bootstrap";
-import AuthProvider, { useAuth } from "../contexts/AuthContext";
+import AuthProvider, { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
 export default function Login() {

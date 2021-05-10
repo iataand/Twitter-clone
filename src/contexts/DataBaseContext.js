@@ -8,39 +8,34 @@ export const useDatabase = () => {
 };
 
 export default function DatabaseProvider({ children }) {
-  const postsRef = database.ref("posts");
+  const dbRef = database.ref("posts");
+
+  const getCommsRef = (postId) => {
+    return database.ref(`posts/${postId}`);
+  };
 
   const addPostToDatabase = (post) => {
     return database.ref("posts").push(post);
   };
 
-  const getPostsFromDatabase = () => {
-    const dbRef = database.ref();
-    return dbRef
-      .child("posts")
-      .get()
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          return data;
-        } else {
-          return "No data available";
-        }
-      })
-      .catch((error) => {
-        return error;
-      });
+  const addCommToPost = (postId, comment, user) => {
+    return database
+      .ref(`posts/${postId}/comments`)
+      .push({ user: user, text: comment });
   };
 
-  const addCommToPost = (postId, comment) => {
-    return database.ref("posts").child(`${postId}/comments`).push(comment);
+  const addLike = (postId, user) => {
+    return database.ref(`posts/${postId}`).push({
+      likedBy: user,
+    });
   };
 
   const states = {
-    addPostToDatabase,
-    getPostsFromDatabase,
-    postsRef,
+    getCommsRef,
     addCommToPost,
+    addPostToDatabase,
+    dbRef,
+    addLike,
   };
 
   return (
