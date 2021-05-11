@@ -2,12 +2,14 @@ import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import AuthProvider, { useAuth } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import { useDatabase } from "../../contexts/DataBaseContext";
 
 export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
   const { register } = useAuth();
+  const { addUserToDatabase } = useDatabase();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -21,6 +23,7 @@ export default function Signup() {
     try {
       setLoading(true);
       await register(emailRef.current.value, passwordRef.current.value);
+      await addUserToDatabase(emailRef.current.value);
     } catch (err) {
       setError(err.message);
     }

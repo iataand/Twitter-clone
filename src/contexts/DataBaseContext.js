@@ -10,8 +10,16 @@ export const useDatabase = () => {
 export default function DatabaseProvider({ children }) {
   const dbRef = database.ref("posts");
 
+  const addUserToDatabase = (user) => {
+    return database.ref("users").push(user);
+  };
+
   const getCommsRef = (postId) => {
     return database.ref(`posts/${postId}`);
+  };
+
+  const getLikesRef = (postId) => {
+    return database.ref(`posts/${postId}/likedBy`);
   };
 
   const addPostToDatabase = (post) => {
@@ -24,10 +32,46 @@ export default function DatabaseProvider({ children }) {
       .push({ user: user, text: comment });
   };
 
-  const addLike = (postId, user) => {
-    return database.ref(`posts/${postId}`).push({
-      likedBy: user,
+  const getLikes = (postId) => {
+    return database
+      .ref(`posts/${postId}/likedBy`)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          return snapshot.val();
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const incrementLikes = (postId) => {
+    return database.ref(`/posts/${postId}/likes`).transaction((value) => {
+      return (value || 0) + 1;
     });
+  };
+
+  const addLikeToPost = (postId, user) => {
+    return database.ref(`posts/${postId}/likedBy`).push(user);
+  };
+
+  const addLike = (postId) => {
+    return database.ref(`users/likedPosts`).push(postId);
+  };
+
+  const removeLike = (postId, user) => {
+    return database
+      .ref(`posts/${postId}/likedBy/`)
+      .get()
+      .then((res) => {
+        if (res) {
+          const id = Object.entries(res.val()).find((el) => el[1] == user);
+          database.ref(`posts/${postId}/likedBy/${id[0]}`).remove();
+        }
+      });
   };
 
   const states = {
@@ -36,6 +80,12 @@ export default function DatabaseProvider({ children }) {
     addPostToDatabase,
     dbRef,
     addLike,
+    addUserToDatabase,
+    addLikeToPost,
+    getLikes,
+    getLikesRef,
+    incrementLikes,
+    removeLike,
   };
 
   return (

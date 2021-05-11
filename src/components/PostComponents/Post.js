@@ -1,18 +1,55 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { Accordion, Form, Button } from "react-bootstrap";
-import { BsFillChatSquareFill } from "react-icons/bs";
-import { BsHeart } from "react-icons/bs";
+import { BsFillChatSquareFill, BsHeart, BsHeartFill } from "react-icons/bs";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDatabase } from "../../contexts/DataBaseContext";
 import CommentSection from "./CommentSection";
 
 export default function Post({ text, user, postId }) {
+  const [usersLiked, setUsersLiked] = useState();
+  const [isPostLiked, setIsPostLiked] = useState();
   const { currentUser } = useAuth();
-  const { addLike } = useDatabase();
+  const {
+    addLike,
+    addLikeToPost,
+    getLikes,
+    getLikesRef,
+    incrementLikes,
+    removeLike,
+  } = useDatabase();
+
+  useEffect(() => {
+    const ref = getLikesRef(postId);
+
+    ref.on("value", (snapshot) => {
+      if (snapshot.val()) {
+        const data = snapshot.val();
+        setUsersLiked(Object.values(data));
+        if (usersLiked)
+          usersLiked.indexOf(currentUser.email) > -1
+            ? setIsPostLiked(true)
+            : setIsPostLiked(false);
+      }
+    });
+  }, []);
 
   const handleLike = (e) => {
     e.preventDefault();
-    addLike(postId, currentUser.email);
+    getLikes(postId)
+      .then((res) => {
+        if (res && Object.values(res).indexOf(currentUser.email) > -1) {
+          removeLike(postId, currentUser.email);
+          setIsPostLiked(false);
+        } else {
+          addLike(postId, currentUser.email);
+          addLikeToPost(postId, currentUser.email);
+          incrementLikes(postId);
+          setIsPostLiked(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -53,7 +90,7 @@ export default function Post({ text, user, postId }) {
               type="submit"
               onClick={handleLike}
             >
-              <BsHeart></BsHeart>
+              {isPostLiked ? <BsHeartFill></BsHeartFill> : <BsHeart></BsHeart>}
             </button>
           </Form.Group>
           <Accordion.Collapse eventKey="1">
