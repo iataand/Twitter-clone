@@ -54,6 +54,12 @@ export default function DatabaseProvider({ children }) {
     });
   };
 
+  const decrementLikes = (postId) => {
+    return database.ref(`/posts/${postId}/likes`).transaction((value) => {
+      return (value || 0) - 1;
+    });
+  };
+
   const addLikeToPost = (postId, user) => {
     return database.ref(`posts/${postId}/likedBy`).push(user);
   };
@@ -86,6 +92,7 @@ export default function DatabaseProvider({ children }) {
     getLikesRef,
     incrementLikes,
     removeLike,
+    decrementLikes,
   };
 
   return (

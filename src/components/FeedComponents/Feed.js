@@ -6,6 +6,7 @@ import AuthProvider from "../../contexts/AuthContext";
 import DatabaseProvider, { useDatabase } from "../../contexts/DataBaseContext";
 
 export default function Feed() {
+  const [isLoading, setLoading] = useState(false);
   const { dbRef } = useDatabase();
   const [posts, setPosts] = useState();
 
@@ -16,28 +17,37 @@ export default function Feed() {
         setPosts(Object.entries(data));
       }
     });
+
+    setLoading(true);
   }, []);
 
   return (
     <>
-      <AuthProvider>
-        <DatabaseProvider>
-          <Container className="w-100 border p-1" style={{ maxWidth: "600px" }}>
-            <Header></Header>
-            {posts &&
-              posts.map((post) => {
-                return (
-                  <Post
-                    key={post[0]}
-                    postId={post[0]}
-                    text={post[1].text}
-                    user={post[1].user}
-                  ></Post>
-                );
-              })}
-          </Container>
-        </DatabaseProvider>
-      </AuthProvider>
+      {isLoading ? (
+        <AuthProvider>
+          <DatabaseProvider>
+            <Container
+              className="w-100 border p-1"
+              style={{ maxWidth: "600px" }}
+            >
+              <Header></Header>
+              {posts &&
+                posts.map((post) => {
+                  return (
+                    <Post
+                      key={post[0]}
+                      postId={post[0]}
+                      text={post[1].text}
+                      user={post[1].user}
+                    ></Post>
+                  );
+                })}
+            </Container>
+          </DatabaseProvider>
+        </AuthProvider>
+      ) : (
+        "..."
+      )}
     </>
   );
 }

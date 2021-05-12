@@ -38,7 +38,13 @@ export default function CommentSection({ postId }) {
       <div>
         {comments &&
           comments.map((comm) => {
-            return <Comment user={comm[1].user} text={comm[1].text}></Comment>;
+            return (
+              <Comment
+                key={postId}
+                user={comm[1].user}
+                text={comm[1].text}
+              ></Comment>
+            );
           })}
       </div>
     </div>
