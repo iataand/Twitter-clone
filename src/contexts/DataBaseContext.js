@@ -74,8 +74,21 @@ export default function DatabaseProvider({ children }) {
       .get()
       .then((res) => {
         if (res) {
-          const id = Object.entries(res.val()).find((el) => el[1] == user);
+          const id = Object.entries(res.val()).find((el) => el[1] === user);
           database.ref(`posts/${postId}/likedBy/${id[0]}`).remove();
+        }
+      });
+  };
+
+  const getUserPosts = (user) => {
+    return database
+      .ref(`posts`)
+      .orderByChild("user")
+      .equalTo(user)
+      .get()
+      .then((res) => {
+        if (res) {
+          return res.val();
         }
       });
   };
@@ -93,6 +106,7 @@ export default function DatabaseProvider({ children }) {
     incrementLikes,
     removeLike,
     decrementLikes,
+    getUserPosts,
   };
 
   return (

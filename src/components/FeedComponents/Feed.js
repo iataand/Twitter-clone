@@ -26,10 +26,7 @@ export default function Feed() {
       {isLoading ? (
         <AuthProvider>
           <DatabaseProvider>
-            <Container
-              className="w-100 border p-1"
-              style={{ maxWidth: "600px" }}
-            >
+            <Container className="border p-1" style={{ maxWidth: "640px" }}>
               <Header></Header>
               {posts &&
                 posts.map((post) => {

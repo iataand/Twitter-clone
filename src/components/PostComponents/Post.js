@@ -3,10 +3,12 @@ import { Accordion, Form, Button, Modal } from "react-bootstrap";
 import { BsFillChatSquareFill, BsHeart, BsHeartFill } from "react-icons/bs";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDatabase } from "../../contexts/DataBaseContext";
+import { useHistory } from "react-router-dom";
 import CommentSection from "./CommentSection";
 
 export default function Post({ text, user, postId }) {
   const [isLoading, setLoading] = useState(false);
+  const history = useHistory();
   const [usersLiked, setUsersLiked] = useState([]);
   const [show, showModal] = useState(false);
   const [isPostLiked, setIsPostLiked] = useState();
@@ -31,7 +33,7 @@ export default function Post({ text, user, postId }) {
       if (snapshot.val()) {
         const data = snapshot.val();
         setUsersLiked(Object.values(data));
-        if (Object.values(data).length > 0) {
+        if (Object.values(data).length > 0 && currentUser) {
           Object.values(data).indexOf(currentUser.email) > -1
             ? setIsPostLiked(true)
             : setIsPostLiked(false);
@@ -63,6 +65,10 @@ export default function Post({ text, user, postId }) {
       });
   };
 
+  const handleProfileClick = () => {
+    history.push({ pathname: "/profile", state: { user: user } });
+  };
+
   return (
     <>
       {isLoading ? (
@@ -73,6 +79,7 @@ export default function Post({ text, user, postId }) {
                 src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
                 class="rounded m-2"
                 style={{ width: 50, height: 50 }}
+                onClick={handleProfileClick}
               ></img>
               <Form.Text
                 className=""
@@ -124,7 +131,7 @@ export default function Post({ text, user, postId }) {
               )}
             </p>
             <Accordion.Collapse eventKey="1">
-              <div className="">
+              <div>
                 <Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>Likes</Modal.Title>
