@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useDatabase } from "../../contexts/DataBaseContext";
 import { useHistory } from "react-router-dom";
 import CommentSection from "./CommentSection";
+import { useStorage } from "../../contexts/StorageContext";
 
 export default function Post({ text, user, postId }) {
   const [isLoading, setLoading] = useState(false);
@@ -12,7 +13,9 @@ export default function Post({ text, user, postId }) {
   const [usersLiked, setUsersLiked] = useState([]);
   const [show, showModal] = useState(false);
   const [isPostLiked, setIsPostLiked] = useState();
+  const [profilePicture, setProfilePicture] = useState();
   const { currentUser } = useAuth();
+  const { getProfilePicture } = useStorage();
   const {
     addLike,
     addLikeToPost,
@@ -41,6 +44,8 @@ export default function Post({ text, user, postId }) {
       }
     });
 
+    getProfilePicture(user).then((res) => setProfilePicture(res));
+
     setLoading(true);
   }, []);
 
@@ -54,7 +59,7 @@ export default function Post({ text, user, postId }) {
           decrementLikes(postId);
           usersLiked.splice(usersLiked.indexOf(currentUser.email), 1);
         } else {
-          addLike(postId, currentUser.email);
+          // addLike(postId, currentUser.email);
           addLikeToPost(postId, currentUser.email);
           incrementLikes(postId);
           setIsPostLiked(true);
@@ -66,18 +71,25 @@ export default function Post({ text, user, postId }) {
   };
 
   const handleProfileClick = () => {
-    history.push({ pathname: "/profile", state: { user: user } });
+    history.push({
+      pathname: "/profile",
+      state: { user: user, currentUser: currentUser.email },
+    });
   };
 
   return (
     <>
       {isLoading ? (
         <Accordion defaultActiveKey="0">
-          <Form className="border mt-3 ">
+          <div className="border mt-3 ">
             <Form.Group className="d-flex">
               <img
-                src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
-                class="rounded m-2"
+                src={
+                  profilePicture
+                    ? profilePicture
+                    : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
+                }
+                className="rounded m-2"
                 style={{ width: 50, height: 50 }}
                 onClick={handleProfileClick}
               ></img>
@@ -138,8 +150,8 @@ export default function Post({ text, user, postId }) {
                   </Modal.Header>
                   <Modal.Body>
                     {usersLiked &&
-                      usersLiked.map((user) => {
-                        return <p>{user}</p>;
+                      usersLiked.map((user, index) => {
+                        return <p key={postId + index}> {user}</p>;
                       })}
                   </Modal.Body>
                   <Modal.Footer></Modal.Footer>
@@ -147,7 +159,7 @@ export default function Post({ text, user, postId }) {
                 <CommentSection postId={postId}></CommentSection>
               </div>
             </Accordion.Collapse>
-          </Form>
+          </div>
         </Accordion>
       ) : (
         "..."

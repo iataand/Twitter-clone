@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import { useContext, createContext } from "react";
 import { database } from "../firebase";
 
-const DataBaseContext = React.createContext();
+const DataBaseContext = createContext();
 
 export const useDatabase = () => {
   return useContext(DataBaseContext);

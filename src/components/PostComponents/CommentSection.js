@@ -40,7 +40,7 @@ export default function CommentSection({ postId }) {
           comments.map((comm) => {
             return (
               <Comment
-                key={postId}
+                key={comm[0]}
                 user={comm[1].user}
                 text={comm[1].text}
               ></Comment>

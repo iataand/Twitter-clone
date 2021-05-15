@@ -1,11 +1,14 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDatabase } from "../../contexts/DataBaseContext";
+import { useStorage } from "../../contexts/StorageContext";
 
 export default function Header() {
+  const [profilePicture, setProfilePicture] = useState();
   const { currentUser } = useAuth();
   const { addPostToDatabase } = useDatabase();
+  const { getProfilePicture } = useStorage();
   const postTextRef = useRef();
 
   const post = {
@@ -30,13 +33,24 @@ export default function Header() {
     }
   };
 
+  useEffect(() => {
+    if (currentUser)
+      getProfilePicture(currentUser.email).then((res) =>
+        setProfilePicture(res)
+      );
+  }, [currentUser]);
+
   return (
-    <Form onSubmit={handlePost}>
+    <form onSubmit={handlePost}>
       <Form.Group id="postTextRef">
         <div className="d-flex">
           <img
-            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
-            class="rounded m-2"
+            src={
+              profilePicture
+                ? profilePicture
+                : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
+            }
+            className="rounded m-2"
             style={{ width: 50, height: 50 }}
           ></img>
           <Form.Control
@@ -55,6 +69,6 @@ export default function Header() {
           </button>
         </div>
       </Form.Group>
-    </Form>
+    </form>
   );
 }

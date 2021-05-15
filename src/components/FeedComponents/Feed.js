@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Post from "../PostComponents/Post";
 import { Container } from "react-bootstrap";
-import AuthProvider from "../../contexts/AuthContext";
-import DatabaseProvider, { useDatabase } from "../../contexts/DataBaseContext";
+import { useDatabase } from "../../contexts/DataBaseContext";
 
 export default function Feed() {
   const [isLoading, setLoading] = useState(false);
@@ -24,24 +23,20 @@ export default function Feed() {
   return (
     <>
       {isLoading ? (
-        <AuthProvider>
-          <DatabaseProvider>
-            <Container className="border p-1" style={{ maxWidth: "640px" }}>
-              <Header></Header>
-              {posts &&
-                posts.map((post) => {
-                  return (
-                    <Post
-                      key={post[0]}
-                      postId={post[0]}
-                      text={post[1].text}
-                      user={post[1].user}
-                    ></Post>
-                  );
-                })}
-            </Container>
-          </DatabaseProvider>
-        </AuthProvider>
+        <Container className="border p-1" style={{ maxWidth: "640px" }}>
+          <Header></Header>
+          {posts &&
+            posts.map((post) => {
+              return (
+                <Post
+                  key={post[0]}
+                  postId={post[0]}
+                  text={post[1].text}
+                  user={post[1].user}
+                ></Post>
+              );
+            })}
+        </Container>
       ) : (
         "..."
       )}
