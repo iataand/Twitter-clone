@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
 import { useDatabase } from "../../contexts/DataBaseContext";
 import { useHistory } from "react-router-dom";
 import Post from "../PostComponents/Post";
+import Header from "../FeedComponents/Header";
 import "./style.css";
 import { useStorage } from "../../contexts/StorageContext";
 
@@ -39,52 +39,52 @@ export default function Profile() {
       uploadProfilePicture(currentUser, files[0]);
     };
   };
-  // console.log(profilePicture);
 
   return (
-    <div className="container border" style={{ maxWidth: "680px" }}>
-      <div
-        className="bg-image hover-overlay ripple shadow-1-strong rounded"
-        style={{ maxWidth: "200px" }}
-      >
-        <img
-          src={
-            profilePicture
-              ? profilePicture
-              : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
-          }
-          className="ProfilePicture rounded m-2"
-          style={{ width: 180, height: 180 }}
-        ></img>
-      </div>
-      {/* <img src={profilePicture}></img> */}
+    <>
+      <Header></Header>
+      <div className="container border mt-3" style={{ maxWidth: "680px" }}>
+        <div
+          className="bg-image hover-overlay ripple shadow-1-strong rounded"
+          style={{ maxWidth: "200px" }}
+        >
+          <img
+            src={
+              profilePicture
+                ? profilePicture
+                : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
+            }
+            className="ProfilePicture rounded m-2"
+            style={{ width: 180, height: 180 }}
+          ></img>
+        </div>
 
-      {currentUser === userProfile ? (
-        <p className="ml-2" onClick={handleChangeProfileClick}>
-          Change Profile pic
-        </p>
-      ) : null}
+        {currentUser === userProfile ? (
+          <p className="ml-2" onClick={handleChangeProfileClick}>
+            Change Profile pic
+          </p>
+        ) : null}
 
-      <div className="d-flex justify-content-between">
-        <h2 className="ml-2 p-1">{userProfile}</h2>
-        <Button className="btn btn-dark ">Settings</Button>
+        <div className="d-flex justify-content-between">
+          <h2 className="ml-2 ">{userProfile}</h2>
+        </div>
+        <hr></hr>
+        <div className="mb-3">
+          {userPosts &&
+            userPosts.map((post) => {
+              return (
+                <Post
+                  key={post[0]}
+                  postId={post[0]}
+                  text={post[1].text}
+                  user={post[1].user}
+                >
+                  {post.text}
+                </Post>
+              );
+            })}
+        </div>
       </div>
-      <hr></hr>
-      <div className="p-1 mb-3">
-        {userPosts &&
-          userPosts.map((post) => {
-            return (
-              <Post
-                key={post[0]}
-                postId={post[0]}
-                text={post[1].text}
-                user={post[1].user}
-              >
-                {post.text}
-              </Post>
-            );
-          })}
-      </div>
-    </div>
+    </>
   );
 }

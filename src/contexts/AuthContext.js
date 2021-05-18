@@ -27,7 +27,7 @@ export default function AuthProvider({ children }) {
       setCurrentUser(user);
     });
 
-    return unsubscribe; //will execute when the component unmounts
+    return unsubscribe;
   }, []);
 
   const states = {

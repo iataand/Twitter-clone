@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
+import PostSection from "./PostSection";
 import Header from "./Header";
 import Post from "../PostComponents/Post";
 import { Container } from "react-bootstrap";
+import { useAuth } from "../../contexts/AuthContext";
 import { useDatabase } from "../../contexts/DataBaseContext";
 
 export default function Feed() {
   const [isLoading, setLoading] = useState(false);
-  const { dbRef } = useDatabase();
   const [posts, setPosts] = useState();
+  const { currentUser } = useAuth();
+  const { dbRef } = useDatabase();
 
   useEffect(() => {
     dbRef.on("value", (snapshot) => {
@@ -23,20 +26,25 @@ export default function Feed() {
   return (
     <>
       {isLoading ? (
-        <Container className="border p-1" style={{ maxWidth: "640px" }}>
-          <Header></Header>
-          {posts &&
-            posts.map((post) => {
-              return (
-                <Post
-                  key={post[0]}
-                  postId={post[0]}
-                  text={post[1].text}
-                  user={post[1].user}
-                ></Post>
-              );
-            })}
-        </Container>
+        <>
+          <Header currentUser={currentUser ? currentUser.email : null}></Header>
+          <Container className="p-1" style={{ maxWidth: "640px" }}>
+            <PostSection className="border"></PostSection>
+            {posts &&
+              posts.map((post, index) => {
+                return (
+                  <>
+                    <Post
+                      key={post[0] + index}
+                      postId={post[0]}
+                      text={post[1].text}
+                      user={post[1].user}
+                    ></Post>
+                  </>
+                );
+              })}
+          </Container>
+        </>
       ) : (
         "..."
       )}

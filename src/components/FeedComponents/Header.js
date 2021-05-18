@@ -1,74 +1,52 @@
-import { useRef, useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
-import { useAuth } from "../../contexts/AuthContext";
-import { useDatabase } from "../../contexts/DataBaseContext";
+import { useState, useEffect } from "react";
+import { InputGroup, FormControl } from "react-bootstrap";
+import { BiSearch } from "react-icons/bi";
+import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
+import "./style.css";
 
-export default function Header() {
-  const [profilePicture, setProfilePicture] = useState();
-  const { currentUser } = useAuth();
-  const { addPostToDatabase } = useDatabase();
+export default function Header({ currentUser }) {
+  const history = useHistory();
   const { getProfilePicture } = useStorage();
-  const postTextRef = useRef();
-
-  const post = {
-    user: "",
-    text: "",
-    likes: 0,
-    likedBy: [],
-    comments: {},
-  };
-
-  const handlePost = (e) => {
-    e.preventDefault();
-
-    post.user = currentUser.email;
-    post.text = postTextRef.current.value;
-
-    try {
-      addPostToDatabase(post);
-      postTextRef.current.value = "";
-    } catch {
-      console.log("post failed");
-    }
-  };
+  const [profilePicture, setProfilePicture] = useState();
 
   useEffect(() => {
     if (currentUser)
-      getProfilePicture(currentUser.email).then((res) =>
-        setProfilePicture(res)
-      );
-  }, [currentUser]);
+      getProfilePicture(currentUser).then((res) => setProfilePicture(res));
+  });
+
+  const handleProfileClick = () => {
+    history.push({
+      pathname: "/profile",
+      state: { user: currentUser },
+    });
+  };
 
   return (
-    <form onSubmit={handlePost}>
-      <Form.Group id="postTextRef">
-        <div className="d-flex">
-          <img
-            src={
-              profilePicture
-                ? profilePicture
-                : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
-            }
-            className="rounded m-2"
-            style={{ width: 50, height: 50 }}
-          ></img>
-          <Form.Control
-            plaintext
-            type="text"
-            ref={postTextRef}
-            placeholder=" What's happening?"
-            required
-            className="p-2"
-          />
+    <>
+      <div className="p-1">
+        <div className="d-flex justify-content-around align-items-center">
+          <h2 onClick={() => history.push("/feed")}>Home</h2>
+          {/* <InputGroup className="SearchBox w-50 d-flex align-items-center ">
+            <BiSearch></BiSearch>
+            <FormControl placeholder="Search users" />
+          </InputGroup> */}
+          {currentUser ? (
+            <img
+              src={
+                profilePicture
+                  ? profilePicture
+                  : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
+              }
+              onClick={handleProfileClick}
+              style={{ width: "60px", height: "60px" }}
+            ></img>
+          ) : (
+            <div></div>
+          )}
         </div>
-        <hr />
-        <div className="d-flex justify-content-end">
-          <button className="btn btn-dark mr-1" type="submit">
-            Post
-          </button>
-        </div>
-      </Form.Group>
-    </form>
+      </div>
+      <hr className="m-1"></hr>
+    </>
   );
 }

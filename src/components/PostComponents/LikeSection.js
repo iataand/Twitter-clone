@@ -8,7 +8,7 @@ export default function LikeSection(usersLiked) {
   const handleShow = () => showModal(true);
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} style={{ minHeight: "100vh" }}>
       <Modal.Header closeButton>
         <Modal.Title>Likes</Modal.Title>
       </Modal.Header>

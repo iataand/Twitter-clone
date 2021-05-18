@@ -17,7 +17,6 @@ export default function Post({ text, user, postId }) {
   const { currentUser } = useAuth();
   const { getProfilePicture } = useStorage();
   const {
-    addLike,
     addLikeToPost,
     getLikes,
     getLikesRef,
@@ -59,7 +58,6 @@ export default function Post({ text, user, postId }) {
           decrementLikes(postId);
           usersLiked.splice(usersLiked.indexOf(currentUser.email), 1);
         } else {
-          // addLike(postId, currentUser.email);
           addLikeToPost(postId, currentUser.email);
           incrementLikes(postId);
           setIsPostLiked(true);
@@ -98,12 +96,15 @@ export default function Post({ text, user, postId }) {
                 id="postTextRef"
                 className="text-wrap  text-break"
                 style={{ maxWidth: "465px" }}
+                onClick={handleProfileClick}
               >
                 <p>
                   <b>{user}</b>
                 </p>
+
                 <p>{text}</p>
               </Form.Text>
+
               <hr />
             </Form.Group>
             <hr></hr>
