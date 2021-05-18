@@ -17,6 +17,8 @@ export default function Profile() {
   const { getUserPosts } = useDatabase();
   const { uploadProfilePicture, getProfilePicture } = useStorage();
 
+  console.log(userProfile, currentUser);
+
   async function fetchPosts() {
     const response = await getUserPosts(userProfile);
     setUserPosts(Object.entries(response));

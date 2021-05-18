@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { InputGroup, FormControl } from "react-bootstrap";
-import { BiSearch } from "react-icons/bi";
+// import { InputGroup, FormControl } from "react-bootstrap";
+// import { BiSearch } from "react-icons/bi";
 import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
 import "./style.css";
@@ -18,7 +18,7 @@ export default function Header({ currentUser }) {
   const handleProfileClick = () => {
     history.push({
       pathname: "/profile",
-      state: { user: currentUser },
+      state: { user: currentUser, currentUser: currentUser },
     });
   };
 
