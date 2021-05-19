@@ -4,9 +4,10 @@ import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
 import "./style.css";
 import ProfileImageComponent from "./ProfileImage";
-import ChangePictureButton from "./ChangePictureButton";
 import ProfileText from "./ProfileText";
 import PostsSection from "./PostsSection";
+import ProfileButtons from "./ProfileButtons/ProfileButtons";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function Profile() {
   const history = useHistory();
@@ -16,6 +17,7 @@ export default function Profile() {
     history.location.state.currentUser
   );
   const [userPosts, setUserPosts] = useState([]);
+  const { logout } = useAuth();
   const { getUserPosts } = useDatabase();
   const { uploadProfilePicture, getProfilePicture } = useStorage();
 
@@ -51,6 +53,11 @@ export default function Profile() {
     };
   };
 
+  async function handleLogOutClick() {
+    await logout();
+    history.push("/login");
+  }
+
   return (
     <>
       <div className="container border mt-3" style={{ maxWidth: "680px" }}>
@@ -58,11 +65,12 @@ export default function Profile() {
           profilePicture={profilePicture}
         ></ProfileImageComponent>
 
-        <ChangePictureButton
+        <ProfileButtons
           currentUser={currentUser}
           userProfile={userProfile}
           handleChangeProfileClick={handleChangeProfileClick}
-        ></ChangePictureButton>
+          handleLogOutClick={handleLogOutClick}
+        ></ProfileButtons>
 
         <ProfileText userProfile={userProfile}></ProfileText>
 
