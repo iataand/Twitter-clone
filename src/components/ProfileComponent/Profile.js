@@ -45,7 +45,6 @@ export default function Profile() {
 
   return (
     <>
-      <Header></Header>
       <div className="container border mt-3" style={{ maxWidth: "680px" }}>
         <div
           className="bg-image hover-overlay ripple shadow-1-strong rounded"

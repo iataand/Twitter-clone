@@ -1,23 +1,27 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
+import { useAuth } from "../../contexts/AuthContext";
 import ImageComponent from "./ImageComponent";
 import "./style.css";
 
-export default function Header({ currentUser }) {
+export default function Header() {
   const history = useHistory();
   const [profilePicture, setProfilePicture] = useState();
   const { getProfilePicture } = useStorage();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     if (currentUser)
-      getProfilePicture(currentUser).then((res) => setProfilePicture(res));
+      getProfilePicture(currentUser.email).then((res) =>
+        setProfilePicture(res)
+      );
   }, [profilePicture]);
 
   const handleProfileClick = () => {
     history.push({
       pathname: "/profile",
-      state: { user: currentUser, currentUser: currentUser },
+      state: { user: currentUser.email, currentUser: currentUser.email },
     });
   };
 
@@ -28,7 +32,7 @@ export default function Header({ currentUser }) {
           Home
         </h1>
         <ImageComponent
-          currentUser={currentUser}
+          currentUser={currentUser.email}
           profilePicture={profilePicture}
           handleProfileClick={handleProfileClick}
         ></ImageComponent>

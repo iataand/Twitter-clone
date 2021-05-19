@@ -6,6 +6,7 @@ import Register from "./LandingPageComponents/Register.js";
 import Login from "./LandingPageComponents/Login.js";
 import Feed from "./FeedComponents/Feed.js";
 import Profile from "./ProfileComponent/Profile";
+import Header from "./HeaderComponents/Header";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             </Route>
             <Route path="/register" component={Register}></Route>
             <Route path="/login" component={Login}></Route>
+            <Header></Header>
             <Route path="/feed" component={Feed}></Route>
             <Route path="/profile" component={Profile}></Route>
           </DataBaseContext>

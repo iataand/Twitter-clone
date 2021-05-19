@@ -27,7 +27,6 @@ export default function Feed() {
     <>
       {isLoading ? (
         <>
-          <Header currentUser={currentUser ? currentUser.email : null}></Header>
           <Container className="p-1" style={{ maxWidth: "640px" }}>
             <PostSection className="border"></PostSection>
             {posts &&
