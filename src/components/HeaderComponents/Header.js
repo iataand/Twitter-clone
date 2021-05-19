@@ -16,7 +16,7 @@ export default function Header() {
       getProfilePicture(currentUser.email).then((res) =>
         setProfilePicture(res)
       );
-  }, [profilePicture]);
+  });
 
   const handleProfileClick = () => {
     history.push({
@@ -32,7 +32,7 @@ export default function Header() {
           Home
         </h1>
         <ImageComponent
-          currentUser={currentUser.email}
+          currentUser={currentUser ? currentUser.email : null}
           profilePicture={profilePicture}
           handleProfileClick={handleProfileClick}
         ></ImageComponent>

@@ -5,7 +5,7 @@ import StorageProvider from "../contexts/StorageContext";
 import Register from "./LandingPageComponents/Register.js";
 import Login from "./LandingPageComponents/Login.js";
 import Feed from "./FeedComponents/Feed.js";
-import Profile from "./ProfileComponent/Profile";
+import Profile from "./ProfileComponents/Profile";
 import Header from "./HeaderComponents/Header";
 
 function App() {

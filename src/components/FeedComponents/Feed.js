@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PostSection from "./PostSection";
-import Header from "../HeaderComponents/Header";
 import Post from "../PostComponents/Post";
 import { Container } from "react-bootstrap";
-import { useAuth } from "../../contexts/AuthContext";
 import { useDatabase } from "../../contexts/DataBaseContext";
 
 export default function Feed() {
   const [isLoading, setLoading] = useState(false);
   const [posts, setPosts] = useState();
-  const { currentUser } = useAuth();
   const { dbRef } = useDatabase();
 
   useEffect(() => {

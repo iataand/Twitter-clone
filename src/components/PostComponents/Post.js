@@ -4,10 +4,16 @@ import { BsFillChatSquareFill, BsHeart, BsHeartFill } from "react-icons/bs";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDatabase } from "../../contexts/DataBaseContext";
 import { useHistory } from "react-router-dom";
-import CommentSection from "./CommentSection";
 import { useStorage } from "../../contexts/StorageContext";
+import CommentSection from "./CommentSection";
+import "./style.css";
 
-export default function Post({ text, user, postId }) {
+export default function Post({
+  text,
+  user,
+  postId,
+  profilePictureFromProfile,
+}) {
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
   const [usersLiked, setUsersLiked] = useState([]);
@@ -43,7 +49,10 @@ export default function Post({ text, user, postId }) {
       }
     });
 
-    getProfilePicture(user).then((res) => setProfilePicture(res));
+    console.log(profilePictureFromProfile);
+
+    if (!profilePictureFromProfile)
+      getProfilePicture(user).then((res) => setProfilePicture(res));
 
     setLoading(true);
   }, []);
@@ -81,24 +90,27 @@ export default function Post({ text, user, postId }) {
         <Accordion defaultActiveKey="0">
           <div className="border mt-3 ">
             <Form.Group className="d-flex">
-              <img
-                src={
-                  profilePicture
-                    ? profilePicture
-                    : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
-                }
-                className="rounded m-2"
-                style={{ width: 50, height: 50 }}
-                onClick={handleProfileClick}
-              ></img>
+              <div className="PostImage">
+                <img
+                  src={
+                    profilePicture ||
+                    profilePictureFromProfile ||
+                    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
+                  }
+                  className="rounded m-2"
+                  style={{ width: 50, height: 50 }}
+                  onClick={handleProfileClick}
+                ></img>
+              </div>
+
               <Form.Text
-                className=""
+                className="PostUserText"
                 id="postTextRef"
                 className="text-wrap  text-break"
                 style={{ maxWidth: "465px" }}
                 onClick={handleProfileClick}
               >
-                <p>
+                <p className="PostUserText">
                   <b>{user}</b>
                 </p>
 
