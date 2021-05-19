@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDatabase } from "../../contexts/DataBaseContext";
 import { useHistory } from "react-router-dom";
 import Post from "../PostComponents/Post";
-import Header from "../FeedComponents/Header";
+import Header from "../HeaderComponents/Header";
 import "./style.css";
 import { useStorage } from "../../contexts/StorageContext";
 
@@ -20,8 +20,9 @@ export default function Profile() {
   console.log(userProfile, currentUser);
 
   async function fetchPosts() {
-    const response = await getUserPosts(userProfile);
-    setUserPosts(Object.entries(response));
+    getUserPosts(userProfile).then((res) => {
+      if (res) setUserPosts(Object.entries(res));
+    });
   }
 
   useEffect(() => {

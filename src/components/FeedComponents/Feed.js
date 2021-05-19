@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PostSection from "./PostSection";
-import Header from "./Header";
+import Header from "../HeaderComponents/Header";
 import Post from "../PostComponents/Post";
 import { Container } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
@@ -16,7 +16,7 @@ export default function Feed() {
     dbRef.on("value", (snapshot) => {
       if (snapshot.val()) {
         const data = snapshot.val();
-        setPosts(Object.entries(data));
+        setPosts(Object.entries(data).reverse());
       }
     });
 

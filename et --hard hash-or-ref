@@ -1,0 +1,95 @@
+[33mcommit 0415f72f1b263176dde09d6776ccb2fdb4863abd[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Wed May 19 12:36:31 2021 +0300
+
+    added reload on profile picture change
+
+[33mcommit 2820ff8d738472eb91e8d36e7a1612eb8353934e[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Tue May 18 16:14:17 2021 +0300
+
+    fixed little bug
+
+[33mcommit 0a4619ea5f18bc3d7befac6c56a0edc530e854d9[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Tue May 18 15:52:40 2021 +0300
+
+    added header image
+
+[33mcommit d97c9e1e7a33a9f6b377e150275366aee5fdf1a4[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Sat May 15 14:52:04 2021 +0300
+
+    added profile pictures
+
+[33mcommit 8afc8ce566a04f69b31d6cd53f24b226a7c40420[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Thu May 13 13:02:44 2021 +0300
+
+    added profile page and fetched posts for profile user clicked
+
+[33mcommit f0c31d5a51af7b43ed2e052c87f47320048d577d[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Wed May 12 17:35:26 2021 +0300
+
+    added like counter
+
+[33mcommit db211612435f04238bb807fd93689ce9bce83473[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Tue May 11 10:43:06 2021 +0300
+
+    added remove like feature
+
+[33mcommit b0b9d2daaafe2a5a6ecf73c582959d38365b0466[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Mon May 10 23:08:29 2021 +0300
+
+    added like function
+
+[33mcommit 852e841d57f870a3ece468dfd7f771ef1dc2d01f[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Thu May 6 00:54:42 2021 +0300
+
+    added comment feature
+
+[33mcommit 0444a47062b5c8e798b6e27e61ef71af7a06b114[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Wed May 5 12:50:52 2021 +0300
+
+    added hover animation on like and comment button
+
+[33mcommit b059c4564852ff5fd96384aa98285d7c31f4c511[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Tue May 4 15:32:29 2021 +0300
+
+    added fetching posts from database and more styling
+
+[33mcommit 68b87c5217fc87ac568b605af39b343e903a6991[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Tue May 4 00:19:38 2021 +0300
+
+    added a new header component and new font
+
+[33mcommit f85e83a00bd94af394ce9d3cda6d2673d7ab14ed[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Mon May 3 19:09:25 2021 +0300
+
+    added connection to database and post feature
+
+[33mcommit 99c6a953fd3049b0184acdaab0d0bc5217c50001[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Sun Apr 25 15:08:16 2021 +0300
+
+    added error messages in Alert component on register fail
+
+[33mcommit 82a4f4d2569301c0902479de6f6e782ba6e22785[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Sun Apr 25 12:55:15 2021 +0300
+
+    first added login page
+
+[33mcommit 1374da27e20241641a17e48aaaea9a415f62e06b[m
+Author: obi4 <iatan772@gmail.com>
+Date:   Sat Apr 24 15:10:15 2021 +0300
+
+    Initialize project using Create React App
