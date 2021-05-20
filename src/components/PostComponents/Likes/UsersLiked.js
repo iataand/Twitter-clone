@@ -2,8 +2,8 @@ import React from "react";
 
 export default function UsersLiked({ usersLiked, handleShow }) {
   return (
-    <div className="Likes">
-      <p
+    <span className="Likes">
+      <span
         variant="primary"
         onClick={handleShow}
         className="d-flex justify-content-center"
@@ -18,7 +18,7 @@ export default function UsersLiked({ usersLiked, handleShow }) {
         ) : (
           ""
         )}
-      </p>
-    </div>
+      </span>
+    </span>
   );
 }

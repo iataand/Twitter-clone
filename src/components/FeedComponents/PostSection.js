@@ -4,6 +4,7 @@ import { RiImageAddFill } from "react-icons/ri";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDatabase } from "../../contexts/DataBaseContext";
 import { useStorage } from "../../contexts/StorageContext";
+import { defaultImage } from "../../constants";
 
 export default function Header() {
   const [profilePicture, setProfilePicture] = useState();
@@ -46,11 +47,7 @@ export default function Header() {
       <Form.Group id="postTextRef">
         <div className="d-flex ">
           <img
-            src={
-              profilePicture
-                ? profilePicture
-                : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
-            }
+            src={profilePicture ? profilePicture : defaultImage}
             className="rounded m-2"
             style={{ width: 50, height: 50 }}
           ></img>

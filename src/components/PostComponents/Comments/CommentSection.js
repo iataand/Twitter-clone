@@ -1,8 +1,8 @@
 import Comment from "./Comment.js";
 import { useRef, useState, useEffect } from "react";
 import { Button, FormControl } from "react-bootstrap";
-import { useDatabase } from "../../contexts/DataBaseContext";
-import { useAuth } from "../../contexts/AuthContext";
+import { useDatabase } from "../../../contexts/DataBaseContext";
+import { useAuth } from "../../../contexts/AuthContext";
 
 export default function CommentSection({ postId }) {
   const comment = useRef();
@@ -14,9 +14,11 @@ export default function CommentSection({ postId }) {
     const ref = getCommsRef(postId);
 
     ref.on("value", (snapshot) => {
-      if (snapshot.val()) {
+      if (snapshot.exists()) {
         const data = snapshot.val();
-        if (data.comments) setComments(Object.entries(data.comments));
+        if (data.comments) {
+          setComments(Object.entries(data.comments));
+        } else setComments([]);
       }
     });
   }, []);
@@ -29,7 +31,12 @@ export default function CommentSection({ postId }) {
   return (
     <div>
       <div className="d-flex p-2">
-        <FormControl className="" ref={comment} placeholder="Leave a comment" />
+        <FormControl
+          required
+          className=""
+          ref={comment}
+          placeholder="Leave a comment"
+        />
         <Button className="btn btn-dark " onClick={() => postComment()}>
           Reply
         </Button>
@@ -41,8 +48,11 @@ export default function CommentSection({ postId }) {
             return (
               <Comment
                 key={comm[0]}
+                commentId={comm[0]}
+                postId={postId}
                 user={comm[1].user}
                 text={comm[1].text}
+                currentUser={currentUser}
               ></Comment>
             );
           })}

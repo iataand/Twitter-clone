@@ -3,12 +3,14 @@ import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
 import { useAuth } from "../../contexts/AuthContext";
 import ImageComponent from "./ImageComponent";
+import HomeImage from "./HomeImage";
 import "./style.css";
 
 export default function Header() {
   const history = useHistory();
   const [profilePicture, setProfilePicture] = useState();
-  const { getProfilePicture } = useStorage();
+  const [homeIcon, setHomeIcon] = useState();
+  const { getProfilePicture, getHomeIcon } = useStorage();
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -16,6 +18,10 @@ export default function Header() {
       getProfilePicture(currentUser.email).then((res) =>
         setProfilePicture(res)
       );
+
+    getHomeIcon().then((res) => {
+      setHomeIcon(res);
+    });
   });
 
   const handleProfileClick = () => {
@@ -29,8 +35,10 @@ export default function Header() {
     <>
       <div className="headerContainer d-flex justify-content-around align-items-center">
         <h1 className="Home" onClick={() => history.push("/feed")}>
-          Home
+          <HomeImage homeIcon={homeIcon}></HomeImage>
         </h1>
+
+        <h1>Twittarr</h1>
         {currentUser ? (
           <ImageComponent
             currentUser={currentUser ? currentUser.email : null}

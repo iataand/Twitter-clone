@@ -26,9 +26,21 @@ export default function StorageProvider({ children }) {
       });
   };
 
+  const getHomeIcon = () => {
+    return storage
+      .ref("/Icons/Twitter-Pirate-Icon.jpg")
+      .getDownloadURL()
+      .then((url) => url)
+      .catch((error) => {
+        if (error.code == "storage/object-not-found") {
+          return null;
+        }
+      });
+  };
   const states = {
     uploadProfilePicture,
     getProfilePicture,
+    getHomeIcon,
   };
 
   return (

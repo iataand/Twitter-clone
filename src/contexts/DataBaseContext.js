@@ -80,17 +80,12 @@ export default function DatabaseProvider({ children }) {
       });
   };
 
-  const getUserPosts = (user) => {
-    return database
-      .ref(`posts`)
-      .orderByChild("user")
-      .equalTo(user)
-      .get()
-      .then((res) => {
-        if (res) {
-          return res.val();
-        }
-      });
+  const removePost = (postId) => {
+    return database.ref(`posts/${postId}`).remove();
+  };
+
+  const removeComment = (commentId, postId) => {
+    return database.ref(`posts/${postId}/comments/${commentId}`).remove();
   };
 
   const states = {
@@ -106,7 +101,8 @@ export default function DatabaseProvider({ children }) {
     incrementLikes,
     removeLike,
     decrementLikes,
-    getUserPosts,
+    removePost,
+    removeComment,
   };
 
   return (

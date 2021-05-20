@@ -5,13 +5,14 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useDatabase } from "../../contexts/DataBaseContext";
 import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
-import CommentSection from "./CommentSection";
+import CommentSection from "./Comments/CommentSection";
 import PostImage from "./PostImage";
-import LikeButton from "./LikeButton";
-import UsersLiked from "./UsersLiked";
+import LikeButton from "./Likes/LikeButton";
+import UsersLiked from "./Likes/UsersLiked";
 import PostText from "./PostText";
-import LikesModal from "./LikesModal";
+import LikesModal from "./Likes/LikesModal";
 import "./style.css";
+import DelePostButton from "./DelePostButton";
 
 export default function Post({
   text,
@@ -34,6 +35,7 @@ export default function Post({
     incrementLikes,
     decrementLikes,
     removeLike,
+    removePost,
   } = useDatabase();
 
   const handleClose = () => showModal(false);
@@ -89,6 +91,10 @@ export default function Post({
     });
   };
 
+  const handleDeletePostClick = () => {
+    removePost(postId);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -107,28 +113,38 @@ export default function Post({
                 handleProfileClick={handleProfileClick}
               ></PostText>
 
+              <DelePostButton
+                handleDeletePostClick={handleDeletePostClick}
+                currentUser={currentUser.email}
+                user={user}
+              ></DelePostButton>
+
               <hr />
             </Form.Group>
             <hr></hr>
-            <Form.Group className="d-flex justify-content-around">
-              <Accordion.Toggle
-                as={Button}
-                eventKey="1"
-                className="btn btn-dark btn-outline-light btn-sm"
-              >
-                <BsFillChatSquareFill></BsFillChatSquareFill>
-              </Accordion.Toggle>
 
-              <LikeButton
-                isPostLiked={isPostLiked}
-                handleLike={handleLike}
-              ></LikeButton>
+            <Form.Group>
+              <div className="Buttons d-flex justify-content-around">
+                <Accordion.Toggle
+                  as={Button}
+                  eventKey="1"
+                  className="btn btn-dark btn-outline-light btn-sm"
+                >
+                  <BsFillChatSquareFill></BsFillChatSquareFill>
+                </Accordion.Toggle>
+                <span className="Likes">
+                  <UsersLiked
+                    usersLiked={usersLiked}
+                    handleShow={handleShow}
+                  ></UsersLiked>
+                </span>
+
+                <LikeButton
+                  isPostLiked={isPostLiked}
+                  handleLike={handleLike}
+                ></LikeButton>
+              </div>
             </Form.Group>
-
-            <UsersLiked
-              usersLiked={usersLiked}
-              handleShow={handleShow}
-            ></UsersLiked>
 
             <Accordion.Collapse eventKey="1">
               <div>

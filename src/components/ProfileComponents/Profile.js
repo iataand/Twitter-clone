@@ -18,25 +18,24 @@ export default function Profile() {
   );
   const [userPosts, setUserPosts] = useState([]);
   const { logout } = useAuth();
-  const { getUserPosts } = useDatabase();
+  const { getUserPosts, dbRef } = useDatabase();
   const { uploadProfilePicture, getProfilePicture } = useStorage();
 
   console.log(userProfile, currentUser);
 
-  async function fetchPosts() {
-    getUserPosts(userProfile).then((res) => {
-      if (res) setUserPosts(Object.entries(res));
-    });
-  }
-
   useEffect(() => {
-    if (userPosts.length === 0) fetchPosts();
+    dbRef.on("value", (snapshot) => {
+      if (snapshot.val()) {
+        const data = snapshot.val();
+        setUserPosts(Object.entries(data).reverse());
+      } else setUserPosts([]);
+    });
     getProfilePicture(userProfile).then((res) => {
       if (res) {
         setProfilePicture(res);
       }
     });
-  }, [profilePicture]);
+  }, []);
 
   const handleChangeProfileClick = () => {
     const input = document.createElement("input");
