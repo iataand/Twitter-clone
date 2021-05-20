@@ -2,7 +2,6 @@ import React from "react";
 import Post from "../PostComponents/Post.js";
 
 export default function PostsSection({ userPosts, profilePicture }) {
-  console.log(profilePicture);
   return (
     <div className="mb-3">
       {userPosts &&
@@ -13,7 +12,7 @@ export default function PostsSection({ userPosts, profilePicture }) {
               postId={post[0]}
               text={post[1].text}
               user={post[1].user}
-              profilePictureFromProfile={profilePicture}
+              preloadedProfilePicture={profilePicture}
             >
               {post.text}
             </Post>

@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useDatabase } from "../../contexts/DataBaseContext";
 import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
+import { useAuth } from "../../contexts/AuthContext";
 import "./style.css";
 import ProfileImageComponent from "./ProfileImage";
 import ProfileText from "./ProfileText";
 import PostsSection from "./PostsSection";
 import ProfileButtons from "./ProfileButtons/ProfileButtons";
-import { useAuth } from "../../contexts/AuthContext";
 
 export default function Profile() {
   const history = useHistory();
@@ -18,7 +18,7 @@ export default function Profile() {
   );
   const [userPosts, setUserPosts] = useState([]);
   const { logout } = useAuth();
-  const { getUserPosts, dbRef } = useDatabase();
+  const { dbRef } = useDatabase();
   const { uploadProfilePicture, getProfilePicture } = useStorage();
 
   useEffect(() => {

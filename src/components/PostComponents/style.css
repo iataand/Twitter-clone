@@ -1,7 +1,11 @@
-.PostImage, .PostUserText .Likes, .DeleteButton{
+.PostImage, .Likes, .DeleteButton{
   cursor: pointer;
 }
 
 .Likes{
   width: 100px;
+}
+
+.PostImage{
+  max-width: 100%;
 }

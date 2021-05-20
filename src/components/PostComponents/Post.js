@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
 import CommentSection from "./Comments/CommentSection";
 import PostImage from "./PostImage";
+import PostProfilePicture from "./PostProfilePicture";
 import LikeButton from "./Likes/LikeButton";
 import UsersLiked from "./Likes/UsersLiked";
 import PostText from "./PostText";
@@ -14,20 +15,16 @@ import LikesModal from "./Likes/LikesModal";
 import "./style.css";
 import DelePostButton from "./DelePostButton";
 
-export default function Post({
-  text,
-  user,
-  postId,
-  profilePictureFromProfile,
-}) {
+export default function Post({ text, user, postId, hasImage }) {
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
   const [usersLiked, setUsersLiked] = useState([]);
   const [show, showModal] = useState(false);
   const [isPostLiked, setIsPostLiked] = useState();
   const [profilePicture, setProfilePicture] = useState();
+  const [postImage, setPostImage] = useState();
   const { currentUser } = useAuth();
-  const { getProfilePicture } = useStorage();
+  const { getProfilePicture, getPostImage } = useStorage();
   const {
     addLikeToPost,
     getLikes,
@@ -44,6 +41,13 @@ export default function Post({
   useEffect(() => {
     const ref = getLikesRef(postId);
 
+    if (hasImage) {
+      getPostImage(postId).then((res) => {
+        setPostImage(res);
+        setLoading(true);
+      });
+    }
+
     ref.on("value", (snapshot) => {
       if (snapshot.val()) {
         const data = snapshot.val();
@@ -56,12 +60,9 @@ export default function Post({
       }
     });
 
-    console.log(profilePictureFromProfile);
-
-    if (!profilePictureFromProfile)
-      getProfilePicture(user).then((res) => setProfilePicture(res));
-
-    setLoading(true);
+    getProfilePicture(user).then((res) => {
+      setProfilePicture(res);
+    });
   }, []);
 
   const handleLike = (e) => {
@@ -101,11 +102,10 @@ export default function Post({
         <Accordion defaultActiveKey="0">
           <div className="border mt-3 ">
             <Form.Group className="d-flex">
-              <PostImage
+              <PostProfilePicture
                 profilePicture={profilePicture}
-                profilePictureFromProfile={profilePictureFromProfile}
                 handleProfileClick={handleProfileClick}
-              ></PostImage>
+              ></PostProfilePicture>
 
               <PostText
                 user={user}
@@ -121,6 +121,8 @@ export default function Post({
 
               <hr />
             </Form.Group>
+            {postImage && <PostImage postImage={postImage}></PostImage>}
+
             <hr></hr>
 
             <Form.Group>
