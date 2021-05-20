@@ -1,12 +1,6 @@
-import { useState } from "react";
 import { Modal } from "react-bootstrap";
 
-export default function LikeSection(usersLiked) {
-  const [show, showModal] = useState(false);
-
-  const handleClose = () => showModal(false);
-  const handleShow = () => showModal(true);
-
+export default function LikeSection({ usersLiked, show, handleClose }) {
   return (
     <Modal show={show} onHide={handleClose} style={{ minHeight: "100vh" }}>
       <Modal.Header closeButton>

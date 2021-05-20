@@ -31,11 +31,13 @@ export default function Header() {
         <h1 className="Home" onClick={() => history.push("/feed")}>
           Home
         </h1>
-        <ImageComponent
-          currentUser={currentUser ? currentUser.email : null}
-          profilePicture={profilePicture}
-          handleProfileClick={handleProfileClick}
-        ></ImageComponent>
+        {currentUser ? (
+          <ImageComponent
+            currentUser={currentUser ? currentUser.email : null}
+            profilePicture={profilePicture}
+            handleProfileClick={handleProfileClick}
+          ></ImageComponent>
+        ) : null}
       </div>
       <hr className="m-1"></hr>
     </>

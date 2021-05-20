@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
-import { Accordion, Form, Button, Modal } from "react-bootstrap";
-import { BsFillChatSquareFill, BsHeart, BsHeartFill } from "react-icons/bs";
+import { Accordion, Form, Button } from "react-bootstrap";
+import { BsFillChatSquareFill } from "react-icons/bs";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDatabase } from "../../contexts/DataBaseContext";
 import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
 import CommentSection from "./CommentSection";
+import PostImage from "./PostImage";
+import LikeButton from "./LikeButton";
+import UsersLiked from "./UsersLiked";
+import PostText from "./PostText";
+import LikesModal from "./LikesModal";
 import "./style.css";
 
 export default function Post({
@@ -90,32 +95,17 @@ export default function Post({
         <Accordion defaultActiveKey="0">
           <div className="border mt-3 ">
             <Form.Group className="d-flex">
-              <div className="PostImage">
-                <img
-                  src={
-                    profilePicture ||
-                    profilePictureFromProfile ||
-                    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
-                  }
-                  className="rounded m-2"
-                  style={{ width: 50, height: 50 }}
-                  onClick={handleProfileClick}
-                ></img>
-              </div>
+              <PostImage
+                profilePicture={profilePicture}
+                profilePictureFromProfile={profilePictureFromProfile}
+                handleProfileClick={handleProfileClick}
+              ></PostImage>
 
-              <Form.Text
-                className="PostUserText"
-                id="postTextRef"
-                className="text-wrap  text-break"
-                style={{ maxWidth: "465px" }}
-                onClick={handleProfileClick}
-              >
-                <p className="PostUserText">
-                  <b>{user}</b>
-                </p>
-
-                <p>{text}</p>
-              </Form.Text>
+              <PostText
+                user={user}
+                text={text}
+                handleProfileClick={handleProfileClick}
+              ></PostText>
 
               <hr />
             </Form.Group>
@@ -128,47 +118,26 @@ export default function Post({
               >
                 <BsFillChatSquareFill></BsFillChatSquareFill>
               </Accordion.Toggle>
-              <button
-                className="btn btn-dark btn-outline-light btn-sm"
-                type="submit"
-                onClick={handleLike}
-              >
-                {isPostLiked ? (
-                  <BsHeartFill></BsHeartFill>
-                ) : (
-                  <BsHeart></BsHeart>
-                )}
-              </button>
+
+              <LikeButton
+                isPostLiked={isPostLiked}
+                handleLike={handleLike}
+              ></LikeButton>
             </Form.Group>
-            <p
-              variant="primary"
-              onClick={handleShow}
-              className="d-flex justify-content-center"
-            >
-              {usersLiked.length > 0 ? (
-                usersLiked.length == 1 ? (
-                  <>{usersLiked.length} like </>
-                ) : (
-                  <>{usersLiked.length} likes </>
-                )
-              ) : (
-                ""
-              )}
-            </p>
+
+            <UsersLiked
+              usersLiked={usersLiked}
+              handleShow={handleShow}
+            ></UsersLiked>
+
             <Accordion.Collapse eventKey="1">
               <div>
-                <Modal show={show} onHide={handleClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Likes</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    {usersLiked &&
-                      usersLiked.map((user, index) => {
-                        return <p key={postId + index}> {user}</p>;
-                      })}
-                  </Modal.Body>
-                  <Modal.Footer></Modal.Footer>
-                </Modal>
+                <LikesModal
+                  show={show}
+                  handleClose={handleClose}
+                  usersLiked={usersLiked}
+                ></LikesModal>
+
                 <CommentSection postId={postId}></CommentSection>
               </div>
             </Accordion.Collapse>

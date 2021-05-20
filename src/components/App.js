@@ -1,5 +1,5 @@
 import { Route, BrowserRouter, Redirect } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
+import AuthContext, { useAuth } from "../contexts/AuthContext";
 import DataBaseContext from "../contexts/DataBaseContext";
 import StorageProvider from "../contexts/StorageContext";
 import Register from "./LandingPageComponents/Register.js";
