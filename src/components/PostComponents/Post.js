@@ -115,7 +115,7 @@ export default function Post({
 
               <DelePostButton
                 handleDeletePostClick={handleDeletePostClick}
-                currentUser={currentUser.email}
+                currentUser={currentUser ? currentUser.email : null}
                 user={user}
               ></DelePostButton>
 

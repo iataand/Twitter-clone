@@ -21,15 +21,16 @@ export default function Profile() {
   const { getUserPosts, dbRef } = useDatabase();
   const { uploadProfilePicture, getProfilePicture } = useStorage();
 
-  console.log(userProfile, currentUser);
-
   useEffect(() => {
-    dbRef.on("value", (snapshot) => {
-      if (snapshot.val()) {
-        const data = snapshot.val();
-        setUserPosts(Object.entries(data).reverse());
-      } else setUserPosts([]);
-    });
+    dbRef
+      .orderByChild("user")
+      .equalTo(userProfile)
+      .on("value", (snapshot) => {
+        if (snapshot.val()) {
+          const data = snapshot.val();
+          setUserPosts(Object.entries(data).reverse());
+        } else setUserPosts([]);
+      });
     getProfilePicture(userProfile).then((res) => {
       if (res) {
         setProfilePicture(res);
