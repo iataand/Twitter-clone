@@ -1,3 +1,8 @@
 .AttachImageButton{
   cursor:pointer
 }
+.ImageLoaded{
+  color: hsla(120, 84%, 36%, 0.719);
+  margin-left: 10px;
+  font-weight: bold;
+}

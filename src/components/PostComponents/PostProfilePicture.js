@@ -1,9 +1,5 @@
 import { defaultImage } from "../../constants.js";
-export default function PostImage({
-  profilePicture,
-  profilePictureFromProfile,
-  handleProfileClick,
-}) {
+export default function PostImage({ profilePicture, handleProfileClick }) {
   return (
     <div className="PostImage">
       <img

@@ -2,14 +2,18 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import "./style.css";
 
-export default function PostText({ text }) {
+export default function PostText({ user, handleProfileClick }) {
   return (
     <Form.Text
       id="postTextRef"
       className="text-wrap  text-break"
       style={{ maxWidth: "465px" }}
     >
-      <p className="PostText">{text}</p>
+      <div className="PostUserText" onClick={handleProfileClick}>
+        <p style={{ cursor: "pointer" }}>
+          <b>{user}</b>
+        </p>
+      </div>
     </Form.Text>
   );
 }

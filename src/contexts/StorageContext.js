@@ -27,12 +27,13 @@ export default function StorageProvider({ children }) {
   };
 
   const getPostImage = (postId) => {
-    console.log(postId);
     return storage
       .ref()
       .child(`/posts-images/${postId}`)
       .getDownloadURL()
-      .then((url) => url)
+      .then((url) => {
+        return url;
+      })
       .catch((error) => {
         if (error.code == "storage/object-not-found") {
           return null;

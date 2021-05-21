@@ -9,3 +9,7 @@
 .PostImage{
   max-width: 100%;
 }
+
+.PostText{
+  margin-left: 10px;
+}

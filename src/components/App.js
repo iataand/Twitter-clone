@@ -1,12 +1,14 @@
 import { Route, BrowserRouter, Redirect } from "react-router-dom";
-import AuthContext, { useAuth } from "../contexts/AuthContext";
+import React, { lazy, Suspense } from "react";
+import AuthContext from "../contexts/AuthContext";
 import DataBaseContext from "../contexts/DataBaseContext";
 import StorageProvider from "../contexts/StorageContext";
-import Register from "./LandingPageComponents/Register.js";
-import Login from "./LandingPageComponents/Login.js";
-import Feed from "./FeedComponents/Feed.js";
-import Profile from "./ProfileComponents/Profile";
-import Header from "./HeaderComponents/Header";
+import Spinner from "./Spinner";
+const Register = lazy(() => import("./LandingPageComponents/Register.js"));
+const Login = lazy(() => import("./LandingPageComponents/Login.js"));
+const Feed = lazy(() => import("./FeedComponents/Feed.js"));
+const Profile = lazy(() => import("./ProfileComponents/Profile"));
+const Header = lazy(() => import("./HeaderComponents/Header"));
 
 function App() {
   return (
@@ -14,14 +16,16 @@ function App() {
       <AuthContext>
         <StorageProvider>
           <DataBaseContext>
-            <Route exact path="/">
-              <Redirect to="/login" />
-            </Route>
-            <Route path="/register" component={Register}></Route>
-            <Route path="/login" component={Login}></Route>
-            <Header></Header>
-            <Route path="/feed" component={Feed}></Route>
-            <Route path="/profile" component={Profile}></Route>
+            <Suspense fallback={<Spinner></Spinner>}>
+              <Route exact path="/">
+                <Redirect to="/login" />
+              </Route>
+              <Route path="/register" component={Register}></Route>
+              <Route path="/login" component={Login}></Route>
+              <Header></Header>
+              <Route path="/feed" component={Feed}></Route>
+              <Route path="/profile" component={Profile}></Route>
+            </Suspense>
           </DataBaseContext>
         </StorageProvider>
       </AuthContext>

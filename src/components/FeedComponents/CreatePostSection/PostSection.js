@@ -10,6 +10,7 @@ import PostUserImage from "./PostUserImage";
 export default function Header() {
   const [profilePicture, setProfilePicture] = useState();
   const [imageToUpload, setImageToUpload] = useState();
+  const [imageLoaded, setImageLoaded] = useState(false);
   const { currentUser } = useAuth();
   const { addPostToDatabase } = useDatabase();
   const { getProfilePicture } = useStorage();
@@ -23,6 +24,7 @@ export default function Header() {
     likes: 0,
     likedBy: [],
     comments: {},
+    image: "",
   };
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export default function Header() {
 
   const handlePost = (e) => {
     e.preventDefault();
+    setImageLoaded(false);
 
     post.user = currentUser.email;
     post.text = postTextRef.current.value;
@@ -60,6 +63,7 @@ export default function Header() {
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       setImageToUpload(files[0]);
+      setImageLoaded(true);
     };
   };
 
@@ -83,7 +87,10 @@ export default function Header() {
         </div>
         <hr />
 
-        <PostButtons handleAttachImage={handleAttachImage}></PostButtons>
+        <PostButtons
+          handleAttachImage={handleAttachImage}
+          imageLoaded={imageLoaded}
+        ></PostButtons>
       </Form.Group>
     </form>
   );

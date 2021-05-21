@@ -7,7 +7,7 @@ export default function DelePostButton({
   handleDeletePostClick,
 }) {
   return (
-    <div onClick={handleDeletePostClick} className="DeleteButton pt-1 pl-1">
+    <div onClick={handleDeletePostClick} className="DeleteButton mb-2 p-1">
       {currentUser === user ? <MdDelete></MdDelete> : ""}
     </div>
   );

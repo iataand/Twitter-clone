@@ -8,6 +8,7 @@ import { useStorage } from "../../contexts/StorageContext";
 import CommentSection from "./Comments/CommentSection";
 import PostImage from "./PostImage";
 import PostProfilePicture from "./PostProfilePicture";
+import PostUser from "./PostUser";
 import LikeButton from "./Likes/LikeButton";
 import UsersLiked from "./Likes/UsersLiked";
 import PostText from "./PostText";
@@ -41,13 +42,6 @@ export default function Post({ text, user, postId, hasImage }) {
   useEffect(() => {
     const ref = getLikesRef(postId);
 
-    if (hasImage) {
-      getPostImage(postId).then((res) => {
-        setPostImage(res);
-        setLoading(true);
-      });
-    }
-
     ref.on("value", (snapshot) => {
       if (snapshot.val()) {
         const data = snapshot.val();
@@ -63,7 +57,20 @@ export default function Post({ text, user, postId, hasImage }) {
     getProfilePicture(user).then((res) => {
       setProfilePicture(res);
     });
+
+    setLoading(true);
   }, []);
+
+  useEffect(() => {
+    if (hasImage) {
+      getPostImage(postId).then((res) => {
+        if (res) {
+          setPostImage(res);
+        } else {
+        }
+      });
+    }
+  }, [postImage]);
 
   const handleLike = (e) => {
     e.preventDefault();
@@ -101,30 +108,30 @@ export default function Post({ text, user, postId, hasImage }) {
       {isLoading ? (
         <Accordion defaultActiveKey="0">
           <div className="border mt-3 ">
-            <Form.Group className="d-flex">
+            <Form.Group className="d-flex align-items-center">
               <PostProfilePicture
                 profilePicture={profilePicture}
                 handleProfileClick={handleProfileClick}
               ></PostProfilePicture>
 
-              <PostText
+              <PostUser
                 user={user}
-                text={text}
                 handleProfileClick={handleProfileClick}
-              ></PostText>
-
+              ></PostUser>
               <DelePostButton
                 handleDeletePostClick={handleDeletePostClick}
                 currentUser={currentUser ? currentUser.email : null}
                 user={user}
               ></DelePostButton>
-
-              <hr />
             </Form.Group>
+
+            <Form.Group>
+              <PostText text={text}></PostText>
+            </Form.Group>
+
             {postImage && <PostImage postImage={postImage}></PostImage>}
 
             <hr></hr>
-
             <Form.Group>
               <div className="Buttons d-flex justify-content-around">
                 <Accordion.Toggle
@@ -147,7 +154,6 @@ export default function Post({ text, user, postId, hasImage }) {
                 ></LikeButton>
               </div>
             </Form.Group>
-
             <Accordion.Collapse eventKey="1">
               <div>
                 <LikesModal
