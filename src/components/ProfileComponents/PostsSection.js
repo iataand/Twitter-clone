@@ -13,6 +13,7 @@ export default function PostsSection({ userPosts, profilePicture }) {
               text={post[1].text}
               user={post[1].user}
               preloadedProfilePicture={profilePicture}
+              hasImage={post[1].hasImage}
             >
               {post.text}
             </Post>
