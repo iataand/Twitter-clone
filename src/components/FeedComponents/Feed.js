@@ -2,27 +2,21 @@ import React, { useEffect, useState, lazy, Suspense } from "react";
 import Spinner from "../Spinner/Spinner";
 import { Container } from "react-bootstrap";
 import { useDatabase } from "../../contexts/DataBaseContext";
-import { useAuth } from "../../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 const PostSection = lazy(() => import("./CreatePostSection/PostSection"));
 const Post = lazy(() => import("../PostComponents/Post"));
 
 export default function Feed() {
   const [posts, setPosts] = useState();
-  const history = useHistory();
   const { dbRef } = useDatabase();
-  const { currentUser } = useAuth();
-
-  useEffect(() => {
-    if (!currentUser) history.push("/login");
-  });
 
   useEffect(() => {
     dbRef.on("value", (snapshot) => {
       if (snapshot.val()) {
         const data = snapshot.val();
         setPosts(Object.entries(data).reverse());
-      } else setPosts([]);
+      } else {
+        setPosts([]);
+      }
     });
   }, []);
 

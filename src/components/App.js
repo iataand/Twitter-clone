@@ -4,6 +4,8 @@ import AuthContext from "../contexts/AuthContext";
 import DataBaseContext from "../contexts/DataBaseContext";
 import StorageProvider from "../contexts/StorageContext";
 import Spinner from "./Spinner/Spinner";
+import FeedGuard from "./FeedGuard";
+import ProfileGuard from "./ProfileGuard";
 const Register = lazy(() => import("./LandingPageComponents/Register.js"));
 const Login = lazy(() => import("./LandingPageComponents/Login.js"));
 const Feed = lazy(() => import("./FeedComponents/Feed.js"));
@@ -23,8 +25,10 @@ function App() {
               </Route>
               <Route path="/register" component={Register}></Route>
               <Route path="/login" component={Login}></Route>
-              <Route path="/feed" component={Feed}></Route>
-              <Route path="/profile" component={Profile}></Route>
+              <FeedGuard path="/feed" component={Feed}></FeedGuard>
+              <ProfileGuard path="/profile" component={Profile}></ProfileGuard>
+              {/* <AuthGuard path="/profile" component={Profile}></AuthGuard> */}
+              {/* <Route path="/feed" component={Feed}></Route> */}
             </Suspense>
           </DataBaseContext>
         </StorageProvider>
