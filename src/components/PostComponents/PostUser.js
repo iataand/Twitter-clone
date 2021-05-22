@@ -10,7 +10,7 @@ export default function PostText({ user, handleProfileClick }) {
       style={{ maxWidth: "465px" }}
     >
       <div className="PostUserText" onClick={handleProfileClick}>
-        <p style={{ cursor: "pointer" }}>
+        <p>
           <b>{user}</b>
         </p>
       </div>

@@ -7,6 +7,7 @@ export default function PostButtons({
   handleAttachImage,
   imageLoadedMessage,
   setImageLoadedMessage,
+  setImageToUpload,
 }) {
   return (
     <div className="d-flex justify-content-between align-items-center">
@@ -21,6 +22,7 @@ export default function PostButtons({
               {`${imageSuccesMessage} `}
               <CancelImageUpload
                 setImageLoadedMessage={setImageLoadedMessage}
+                setImageToUpload={setImageToUpload}
               ></CancelImageUpload>
             </>
           ) : (
@@ -39,11 +41,11 @@ export default function PostButtons({
 
       <button
         className={
-          imageLoadedMessage === imageFailedMessage
+          imageLoadedMessage == false
             ? "btn btn-dark mr-1 disabled"
             : "btn btn-dark mr-1"
         }
-        type={imageLoadedMessage === imageFailedMessage ? "button" : "submit"}
+        type={imageLoadedMessage == false ? "button" : "submit"}
       >
         Post
       </button>

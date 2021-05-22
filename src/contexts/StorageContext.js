@@ -56,12 +56,17 @@ export default function StorageProvider({ children }) {
     return storage.ref().child(`posts-images/${imageName}`).put(image);
   };
 
+  const deletePostImage = (imageName) => {
+    return storage.ref().child(`posts-images/${imageName}`).delete();
+  };
+
   const states = {
     uploadProfilePicture,
     getProfilePicture,
     getHomeIcon,
     uploadPostImage,
     getPostImage,
+    deletePostImage,
   };
 
   return (

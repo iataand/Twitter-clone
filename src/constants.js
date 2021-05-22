@@ -11,4 +11,9 @@ export const imageFailedMessage =
 
 export const imageSuccesMessage = "Image loaded, click post to upload";
 
-export const supportedImgExtensions = ["image/jpg", "image/jpeg", "image/png"];
+export const supportedImgExtensions = [
+  "image/jpg",
+  "image/jpeg",
+  "image/png",
+  "image/jfif",
+];

@@ -5,17 +5,12 @@ import { useDatabase } from "../../../contexts/DataBaseContext";
 import { useStorage } from "../../../contexts/StorageContext";
 import PostButtons from "./PostButtons";
 import PostUserImage from "./PostUserImage";
-import {
-  defaultImage,
-  imageSuccesMessage,
-  imageFailedMessage,
-  supportedImgExtensions,
-} from "../../../constants";
+import { defaultImage, supportedImgExtensions } from "../../../constants";
 
 export default function Header() {
   const [profilePicture, setProfilePicture] = useState();
   const [imageToUpload, setImageToUpload] = useState();
-  const [imageLoadedMessage, setImageLoadedMessage] = useState();
+  const [imageLoadedMessage, setImageLoadedMessage] = useState(null);
   const { currentUser } = useAuth();
   const { addPostToDatabase } = useDatabase();
   const { getProfilePicture, uploadPostImage, getPostImage } = useStorage();
@@ -26,6 +21,7 @@ export default function Header() {
     text: "",
     hasImage: false,
     image: "",
+    imageName: "",
     likes: 0,
     likedBy: [],
     comments: {},
@@ -40,7 +36,6 @@ export default function Header() {
 
   async function handlePost(e) {
     e.preventDefault();
-    setImageLoadedMessage(false);
 
     post.user = currentUser.email;
     post.text = postTextRef.current.value;
@@ -51,9 +46,11 @@ export default function Header() {
         await uploadPostImage(imageToUpload.name, imageToUpload);
         const imageUrl = await getPostImage(imageToUpload.name);
         post.image = imageUrl;
+        post.imageName = imageToUpload.name;
         setImageToUpload(null);
       }
       await addPostToDatabase(post);
+      setImageLoadedMessage(null);
 
       postTextRef.current.value = "";
     } catch {
@@ -107,6 +104,7 @@ export default function Header() {
           handleAttachImage={handleAttachImage}
           imageLoadedMessage={imageLoadedMessage}
           setImageLoadedMessage={setImageLoadedMessage}
+          setImageToUpload={setImageToUpload}
         ></PostButtons>
       </Form.Group>
     </form>

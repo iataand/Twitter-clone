@@ -16,16 +16,15 @@ import LikesModal from "./Likes/LikesModal";
 import "./style.css";
 import DelePostButton from "./DelePostButton";
 
-export default function Post({ text, user, postId, hasImage, image }) {
+export default function Post({ text, user, postId, image, imageName }) {
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
   const [usersLiked, setUsersLiked] = useState([]);
   const [show, showModal] = useState(false);
   const [isPostLiked, setIsPostLiked] = useState();
   const [profilePicture, setProfilePicture] = useState();
-  const [postImage, setPostImage] = useState();
   const { currentUser } = useAuth();
-  const { getProfilePicture } = useStorage();
+  const { getProfilePicture, deletePostImage } = useStorage();
   const {
     addLikeToPost,
     getLikes,
@@ -90,6 +89,7 @@ export default function Post({ text, user, postId, hasImage, image }) {
 
   const handleDeletePostClick = () => {
     removePost(postId);
+    deletePostImage(imageName);
   };
 
   return (

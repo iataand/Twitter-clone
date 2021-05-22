@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { Form, Card, Alert } from "react-bootstrap";
 import AuthProvider, { useAuth } from "../../contexts/AuthContext";
@@ -10,9 +10,13 @@ export default function Login() {
   const history = useHistory();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login } = useAuth();
+  const { login, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (currentUser) history.push("/feed");
+  });
 
   async function handleSubmit(e) {
     e.preventDefault();

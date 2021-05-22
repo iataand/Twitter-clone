@@ -1,5 +1,6 @@
-.AttachImageButton{
-  cursor:pointer
+.AttachImageButton:hover{
+  cursor:pointer;
+  text-decoration: underline;
 }
 .ImageLoadedSuccesful{
   color: hsla(120, 84%, 36%, 0.719);

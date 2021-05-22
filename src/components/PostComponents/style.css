@@ -1,5 +1,6 @@
-.PostImage, .Likes, .DeleteButton{
+.PostImage, .Likes:hover, .DeleteButton:hover, .PostUserText:hover {
   cursor: pointer;
+  text-decoration: underline;
 }
 
 .Likes{
