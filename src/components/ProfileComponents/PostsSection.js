@@ -14,6 +14,8 @@ export default function PostsSection({ userPosts, profilePicture }) {
               user={post[1].user}
               preloadedProfilePicture={profilePicture}
               hasImage={post[1].hasImage}
+              image={post[1].image}
+              imageName={post[1].imageName}
             >
               {post.text}
             </Post>
