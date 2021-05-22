@@ -3,7 +3,7 @@ import React, { lazy, Suspense } from "react";
 import AuthContext from "../contexts/AuthContext";
 import DataBaseContext from "../contexts/DataBaseContext";
 import StorageProvider from "../contexts/StorageContext";
-import Spinner from "./Spinner";
+import Spinner from "./Spinner/Spinner";
 const Register = lazy(() => import("./LandingPageComponents/Register.js"));
 const Login = lazy(() => import("./LandingPageComponents/Login.js"));
 const Feed = lazy(() => import("./FeedComponents/Feed.js"));
@@ -17,12 +17,12 @@ function App() {
         <StorageProvider>
           <DataBaseContext>
             <Suspense fallback={<Spinner></Spinner>}>
+              <Header></Header>
               <Route exact path="/">
                 <Redirect to="/login" />
               </Route>
               <Route path="/register" component={Register}></Route>
               <Route path="/login" component={Login}></Route>
-              <Header></Header>
               <Route path="/feed" component={Feed}></Route>
               <Route path="/profile" component={Profile}></Route>
             </Suspense>

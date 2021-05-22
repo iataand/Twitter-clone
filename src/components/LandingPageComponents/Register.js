@@ -1,13 +1,16 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert, Container } from "react-bootstrap";
+import { Form, Card, Alert, Container } from "react-bootstrap";
+import Icons from "./Icons.js";
 import AuthProvider, { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { useDatabase } from "../../contexts/DataBaseContext";
+import "./style.css";
 
 export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+  const username = useRef();
   const { register } = useAuth();
   const { addUserToDatabase } = useDatabase();
   const [error, setError] = useState("");
@@ -36,56 +39,62 @@ export default function Signup() {
 
   return (
     <AuthProvider>
-      <Container
-        className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "100vh" }}
-      >
-        <div className="w-100" style={{ maxWidth: "400px" }}>
-          <Card className="p-4">
-            <h2 className="text-center mb-4">Register</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
+      <div className="Container">
+        <Icons></Icons>
 
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" ref={emailRef} required />
-              </Form.Group>
+        <div className="Box d-flex align-items-center justify-content-center">
+          <div className="w-100" style={{ maxWidth: "400px" }}>
+            <Card className="p-4">
+              <h2 className="text-center mb-4">Register</h2>
+              {error && <Alert variant="danger">{error}</Alert>}
 
-              <Form.Group id="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  ref={passwordRef}
-                  required
-                ></Form.Control>
-              </Form.Group>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group id="email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="email" ref={emailRef} required />
+                </Form.Group>
 
-              <Form.Group id="password">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  ref={confirmPasswordRef}
-                  required
-                ></Form.Control>
-              </Form.Group>
+                <Form.Group id="username">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control type="text" ref={username} required />
+                </Form.Group>
 
-              <Form.Group>
-                <button
-                  className="w-100 btn btn-dark"
-                  disabled={loading}
-                  type="submit"
-                >
-                  Register
-                </button>
-              </Form.Group>
-            </Form>
-          </Card>
+                <Form.Group id="password">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    ref={passwordRef}
+                    required
+                  ></Form.Control>
+                </Form.Group>
 
-          <div className="w-100 text-center mt-2">
-            Already have an account? <Link to="/login">Log in</Link>
+                <Form.Group id="password">
+                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    ref={confirmPasswordRef}
+                    required
+                  ></Form.Control>
+                </Form.Group>
+
+                <Form.Group>
+                  <button
+                    className="w-100 btn btn-dark"
+                    disabled={loading}
+                    type="submit"
+                  >
+                    Register
+                  </button>
+                </Form.Group>
+              </Form>
+            </Card>
+
+            <div className="w-100 text-center mt-2">
+              Already have an account? <Link to="/login">Log in</Link>
+            </div>
           </div>
         </div>
-      </Container>
+      </div>
     </AuthProvider>
   );
 }

@@ -16,7 +16,7 @@ import LikesModal from "./Likes/LikesModal";
 import "./style.css";
 import DelePostButton from "./DelePostButton";
 
-export default function Post({ text, user, postId, hasImage }) {
+export default function Post({ text, user, postId, hasImage, image }) {
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
   const [usersLiked, setUsersLiked] = useState([]);
@@ -25,7 +25,7 @@ export default function Post({ text, user, postId, hasImage }) {
   const [profilePicture, setProfilePicture] = useState();
   const [postImage, setPostImage] = useState();
   const { currentUser } = useAuth();
-  const { getProfilePicture, getPostImage } = useStorage();
+  const { getProfilePicture } = useStorage();
   const {
     addLikeToPost,
     getLikes,
@@ -60,17 +60,6 @@ export default function Post({ text, user, postId, hasImage }) {
 
     setLoading(true);
   }, []);
-
-  useEffect(() => {
-    if (hasImage) {
-      getPostImage(postId).then((res) => {
-        if (res) {
-          setPostImage(res);
-        } else {
-        }
-      });
-    }
-  }, [postImage]);
 
   const handleLike = (e) => {
     e.preventDefault();
@@ -129,7 +118,7 @@ export default function Post({ text, user, postId, hasImage }) {
               <PostText text={text}></PostText>
             </Form.Group>
 
-            {postImage && <PostImage postImage={postImage}></PostImage>}
+            {image && <PostImage postImage={image}></PostImage>}
 
             <hr></hr>
             <Form.Group>

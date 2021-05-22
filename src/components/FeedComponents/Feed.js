@@ -1,5 +1,5 @@
 import React, { useEffect, useState, lazy, Suspense } from "react";
-import Spinner from "../Spinner";
+import Spinner from "../Spinner/Spinner";
 import { Container } from "react-bootstrap";
 import { useDatabase } from "../../contexts/DataBaseContext";
 const PostSection = lazy(() => import("./CreatePostSection/PostSection"));
@@ -32,6 +32,7 @@ export default function Feed() {
                   text={post[1].text}
                   user={post[1].user}
                   hasImage={post[1].hasImage}
+                  image={post[1].image}
                 ></Post>
               </>
             );

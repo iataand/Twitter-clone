@@ -33,21 +33,27 @@ export default function Header() {
 
   return (
     <>
-      <div className="headerContainer d-flex justify-content-around align-items-center">
-        <h1 className="Home" onClick={() => history.push("/feed")}>
-          <HomeImage homeIcon={homeIcon}></HomeImage>
-        </h1>
+      {currentUser ? (
+        <>
+          <div className="headerContainer d-flex justify-content-around align-items-center">
+            <h1 className="Home" onClick={() => history.push("/feed")}>
+              <HomeImage homeIcon={homeIcon}></HomeImage>
+            </h1>
 
-        <h1>Twittarr</h1>
-        {currentUser ? (
-          <ImageComponent
-            currentUser={currentUser ? currentUser.email : null}
-            profilePicture={profilePicture}
-            handleProfileClick={handleProfileClick}
-          ></ImageComponent>
-        ) : null}
-      </div>
-      <hr className="m-1"></hr>
+            <h1>Twittarrr</h1>
+            {currentUser ? (
+              <ImageComponent
+                currentUser={currentUser ? currentUser.email : null}
+                profilePicture={profilePicture}
+                handleProfileClick={handleProfileClick}
+              ></ImageComponent>
+            ) : null}
+          </div>
+          <hr className="m-1"></hr>
+        </>
+      ) : (
+        <div></div>
+      )}
     </>
   );
 }

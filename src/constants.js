@@ -3,3 +3,12 @@ export const defaultImage =
 
 export const homeImage =
   "gs://twitter-clone-developmen-44311.appspot.com/Icons/Twitter-Pirate-Icon.jpg";
+
+export const spinnerGif = "../public/spinner.gif";
+
+export const imageFailedMessage =
+  "Failed to upload image, please use JPG or PNG";
+
+export const imageSuccesMessage = "Image loaded, click post to upload";
+
+export const supportedImgExtensions = ["image/jpg", "image/jpeg", "image/png"];

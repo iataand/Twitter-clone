@@ -3,28 +3,32 @@ import { Form } from "react-bootstrap";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useDatabase } from "../../../contexts/DataBaseContext";
 import { useStorage } from "../../../contexts/StorageContext";
-import { defaultImage } from "../../../constants";
 import PostButtons from "./PostButtons";
 import PostUserImage from "./PostUserImage";
+import {
+  defaultImage,
+  imageSuccesMessage,
+  imageFailedMessage,
+  supportedImgExtensions,
+} from "../../../constants";
 
 export default function Header() {
   const [profilePicture, setProfilePicture] = useState();
   const [imageToUpload, setImageToUpload] = useState();
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageLoadedMessage, setImageLoadedMessage] = useState();
   const { currentUser } = useAuth();
   const { addPostToDatabase } = useDatabase();
-  const { getProfilePicture } = useStorage();
-  const { uploadPostImage } = useStorage();
+  const { getProfilePicture, uploadPostImage, getPostImage } = useStorage();
   const postTextRef = useRef();
 
   const post = {
     user: "",
     text: "",
     hasImage: false,
+    image: "",
     likes: 0,
     likedBy: [],
     comments: {},
-    image: "",
   };
 
   useEffect(() => {
@@ -34,24 +38,28 @@ export default function Header() {
       );
   }, [currentUser]);
 
-  const handlePost = (e) => {
+  async function handlePost(e) {
     e.preventDefault();
-    setImageLoaded(false);
+    setImageLoadedMessage(false);
 
     post.user = currentUser.email;
     post.text = postTextRef.current.value;
     if (imageToUpload) post.hasImage = true;
 
     try {
-      addPostToDatabase(post).then((res) => {
-        imageToUpload && uploadPostImage(res.key, imageToUpload);
+      if (imageToUpload) {
+        await uploadPostImage(imageToUpload.name, imageToUpload);
+        const imageUrl = await getPostImage(imageToUpload.name);
+        post.image = imageUrl;
         setImageToUpload(null);
-      });
+      }
+      await addPostToDatabase(post);
+
       postTextRef.current.value = "";
     } catch {
       console.log("post failed");
     }
-  };
+  }
 
   const handleAttachImage = () => {
     const input = document.createElement("input");
@@ -62,8 +70,16 @@ export default function Header() {
       const files = e.target.files;
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
-      setImageToUpload(files[0]);
-      setImageLoaded(true);
+      console.log(files[0]);
+      if (supportedImgExtensions.indexOf(files[0].type) > -1) {
+        setImageToUpload(files[0]);
+        setImageLoadedMessage(true);
+      } else {
+        setImageLoadedMessage(false);
+        setTimeout(() => {
+          setImageLoadedMessage(null);
+        }, 3000);
+      }
     };
   };
 
@@ -89,7 +105,8 @@ export default function Header() {
 
         <PostButtons
           handleAttachImage={handleAttachImage}
-          imageLoaded={imageLoaded}
+          imageLoadedMessage={imageLoadedMessage}
+          setImageLoadedMessage={setImageLoadedMessage}
         ></PostButtons>
       </Form.Group>
     </form>

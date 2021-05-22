@@ -9,7 +9,6 @@ export const useStorage = () => {
 
 export default function StorageProvider({ children }) {
   const uploadProfilePicture = (user, profilePicture) => {
-    console.log(storage.ref());
     return storage.ref().child(`users/${user}`).put(profilePicture);
   };
 
@@ -53,8 +52,8 @@ export default function StorageProvider({ children }) {
       });
   };
 
-  const uploadPostImage = (postId, postImage) => {
-    return storage.ref(`posts-images/${postId}`).put(postImage);
+  const uploadPostImage = (imageName, image) => {
+    return storage.ref().child(`posts-images/${imageName}`).put(image);
   };
 
   const states = {

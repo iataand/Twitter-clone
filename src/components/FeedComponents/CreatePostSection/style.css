@@ -1,8 +1,19 @@
 .AttachImageButton{
   cursor:pointer
 }
-.ImageLoaded{
+.ImageLoadedSuccesful{
   color: hsla(120, 84%, 36%, 0.719);
   margin-left: 10px;
   font-weight: bold;
+}
+
+.ImageLoadedFailed{
+  color: hsla(0, 88%, 38%, 0.719);
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.Cancel{
+  cursor: pointer;
+  color: hsla(0, 0%, 0%, 0.719);
 }

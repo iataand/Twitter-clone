@@ -1,11 +1,32 @@
 import { RiImageAddFill } from "react-icons/ri";
+import { imageFailedMessage, imageSuccesMessage } from "../../../constants";
+import CancelImageUpload from "./CancelImageUpload";
 import "./style.css";
 
-export default function PostButtons({ handleAttachImage, imageLoaded }) {
+export default function PostButtons({
+  handleAttachImage,
+  imageLoadedMessage,
+  setImageLoadedMessage,
+}) {
   return (
     <div className="d-flex justify-content-between align-items-center">
-      {imageLoaded ? (
-        <span className="ImageLoaded">Image loaded, click post to upload</span>
+      {imageLoadedMessage != null ? (
+        <span
+          className={
+            imageLoadedMessage ? "ImageLoadedSuccesful" : "ImageLoadedFailed"
+          }
+        >
+          {imageLoadedMessage ? (
+            <>
+              {`${imageSuccesMessage} `}
+              <CancelImageUpload
+                setImageLoadedMessage={setImageLoadedMessage}
+              ></CancelImageUpload>
+            </>
+          ) : (
+            <>{imageFailedMessage}</>
+          )}
+        </span>
       ) : (
         <div
           className="AttachImageButton d-flex ml-3"
@@ -16,7 +37,14 @@ export default function PostButtons({ handleAttachImage, imageLoaded }) {
         </div>
       )}
 
-      <button className="btn btn-dark mr-1" type="submit">
+      <button
+        className={
+          imageLoadedMessage === imageFailedMessage
+            ? "btn btn-dark mr-1 disabled"
+            : "btn btn-dark mr-1"
+        }
+        type={imageLoadedMessage === imageFailedMessage ? "button" : "submit"}
+      >
         Post
       </button>
     </div>
