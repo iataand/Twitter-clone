@@ -5,6 +5,7 @@ import "./createPostStyle.css";
 export default function CancelImageUpload({
   setImageLoadedMessage,
   setImageToUpload,
+  setImagePreview,
 }) {
   return (
     <FaRegWindowClose
@@ -12,6 +13,7 @@ export default function CancelImageUpload({
       onClick={() => {
         setImageLoadedMessage(null);
         setImageToUpload(null);
+        setImagePreview(null);
       }}
     >
       (cancel)

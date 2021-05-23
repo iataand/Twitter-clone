@@ -16,7 +16,14 @@ import LikesModal from "./Likes/LikesModal";
 import "./PostStyle.css";
 import DelePostButton from "./DelePostButton";
 
-export default function Post({ text, user, postId, image, imageName }) {
+export default function Post({
+  text,
+  user,
+  postId,
+  image,
+  imageName,
+  preloadedProfilePicture,
+}) {
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
   const [usersLiked, setUsersLiked] = useState([]);
@@ -53,12 +60,24 @@ export default function Post({ text, user, postId, image, imageName }) {
       }
     });
 
-    getProfilePicture(user).then((res) => {
-      setProfilePicture(res);
-    });
+    if (!preloadedProfilePicture) {
+      getProfilePicture(user).then((res) => {
+        setProfilePicture(res);
+      });
+    } else {
+      setProfilePicture(preloadedProfilePicture);
+    }
 
     setLoading(true);
-  }, [currentUser, getLikesRef, getProfilePicture, postId, user]);
+  }, [
+    currentUser,
+    getLikesRef,
+    getProfilePicture,
+    postId,
+    user,
+    setProfilePicture,
+    preloadedProfilePicture,
+  ]);
 
   const handleLike = (e) => {
     e.preventDefault();

@@ -24,3 +24,8 @@
   height: 50px;
   cursor:pointer;
 }
+
+.ImagePreview{
+  width: 100%; 
+  height: auto;
+}

@@ -1,5 +1,6 @@
 import { RiImageAddFill } from "react-icons/ri";
 import { imageFailedMessage, imageSuccesMessage } from "../../../constants";
+import { Alert } from "react-bootstrap";
 import CancelImageUpload from "./CancelImageUpload";
 import "./createPostStyle.css";
 
@@ -8,11 +9,13 @@ export default function PostButtons({
   imageLoadedMessage,
   setImageLoadedMessage,
   setImageToUpload,
+  setImagePreview,
 }) {
   return (
     <div className="d-flex justify-content-between align-items-center">
       {imageLoadedMessage != null ? (
-        <span
+        <Alert
+          variant={imageLoadedMessage ? "success" : "danger"}
           className={
             imageLoadedMessage ? "ImageLoadedSuccesful" : "ImageLoadedFailed"
           }
@@ -23,12 +26,13 @@ export default function PostButtons({
               <CancelImageUpload
                 setImageLoadedMessage={setImageLoadedMessage}
                 setImageToUpload={setImageToUpload}
+                setImagePreview={setImagePreview}
               ></CancelImageUpload>
             </>
           ) : (
             <>{imageFailedMessage}</>
           )}
-        </span>
+        </Alert>
       ) : (
         <div
           className="AttachImageButton d-flex ml-3"

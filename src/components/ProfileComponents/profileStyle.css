@@ -6,3 +6,7 @@
   width: 180px;
   height: 180px;
 }
+
+.ImageWarning{
+ color: hsla(0, 88%, 38%, 0.719);
+}

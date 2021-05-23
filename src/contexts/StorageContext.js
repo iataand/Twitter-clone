@@ -1,5 +1,6 @@
-import { useContext, createContext } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import { storage } from "../firebase";
+import { useAuth } from "./AuthContext";
 
 const StorageContext = createContext();
 
@@ -8,6 +9,9 @@ export const useStorage = () => {
 };
 
 export default function StorageProvider({ children }) {
+  const [currentUserProfilePicture, setProfilePicture] = useState();
+  const { currentUser } = useAuth();
+
   const uploadProfilePicture = (user, profilePicture) => {
     return storage.ref().child(`users/${user}`).put(profilePicture);
   };
@@ -17,7 +21,9 @@ export default function StorageProvider({ children }) {
       .ref()
       .child(`users/${user}`)
       .getDownloadURL()
-      .then((url) => url)
+      .then((url) => {
+        return url;
+      })
       .catch((error) => {
         if (error.code === "storage/object-not-found") {
           return null;
@@ -60,6 +66,22 @@ export default function StorageProvider({ children }) {
     return storage.ref().child(`posts-images/${imageName}`).delete();
   };
 
+  useEffect(() => {
+    if (currentUser)
+      return storage
+        .ref()
+        .child(`users/${currentUser.email}`)
+        .getDownloadURL()
+        .then((url) => {
+          setProfilePicture(url);
+        })
+        .catch((error) => {
+          if (error.code === "storage/object-not-found") {
+            return null;
+          }
+        });
+  });
+
   const states = {
     uploadProfilePicture,
     getProfilePicture,
@@ -67,6 +89,7 @@ export default function StorageProvider({ children }) {
     uploadPostImage,
     getPostImage,
     deletePostImage,
+    currentUserProfilePicture,
   };
 
   return (

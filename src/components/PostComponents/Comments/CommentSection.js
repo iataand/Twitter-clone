@@ -1,6 +1,6 @@
 import Comment from "./Comment.js";
 import { useRef, useState, useEffect } from "react";
-import { Button, FormControl } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useDatabase } from "../../../contexts/DataBaseContext";
 import { useAuth } from "../../../contexts/AuthContext";
 
@@ -24,19 +24,16 @@ export default function CommentSection({ postId }) {
   }, [getCommsRef, postId]);
 
   const postComment = () => {
-    addCommToPost(postId, comment.current.value, currentUser.email);
-    comment.current.value = "";
+    if (comment.current.value) {
+      addCommToPost(postId, comment.current.value, currentUser.email);
+      comment.current.value = "";
+    }
   };
 
   return (
     <div>
       <div className="d-flex p-2">
-        <FormControl
-          required
-          className=""
-          ref={comment}
-          placeholder="Leave a comment"
-        />
+        <Form.Control required ref={comment} placeholder="Leave a comment" />
         <Button className="btn btn-dark " onClick={() => postComment()}>
           Reply
         </Button>

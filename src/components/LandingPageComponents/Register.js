@@ -10,7 +10,6 @@ export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const username = useRef();
   const { register } = useAuth();
   const { addUserToDatabase } = useDatabase();
   const [error, setError] = useState("");

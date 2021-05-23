@@ -3,13 +3,15 @@ import { Form } from "react-bootstrap";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useDatabase } from "../../../contexts/DataBaseContext";
 import { useStorage } from "../../../contexts/StorageContext";
+import { defaultImage, supportedImgExtensions } from "../../../constants";
 import PostButtons from "./PostButtons";
 import PostUserImage from "./PostUserImage";
-import { defaultImage, supportedImgExtensions } from "../../../constants";
+import ImagePreview from "./ImagePreview";
 
 export default function Header() {
   const [profilePicture, setProfilePicture] = useState();
   const [imageToUpload, setImageToUpload] = useState();
+  const [imagePreview, setImagePreview] = useState();
   const [imageLoadedMessage, setImageLoadedMessage] = useState(null);
   const { currentUser } = useAuth();
   const { addPostToDatabase } = useDatabase();
@@ -51,6 +53,7 @@ export default function Header() {
       }
       await addPostToDatabase(post);
       setImageLoadedMessage(null);
+      setImagePreview(null);
 
       postTextRef.current.value = "";
     } catch {
@@ -67,9 +70,9 @@ export default function Header() {
       const files = e.target.files;
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
-      console.log(files[0]);
       if (supportedImgExtensions.indexOf(files[0].type) > -1) {
         setImageToUpload(files[0]);
+        reader.onload = () => setImagePreview(reader.result);
         setImageLoadedMessage(true);
       } else {
         setImageLoadedMessage(false);
@@ -105,8 +108,11 @@ export default function Header() {
           imageLoadedMessage={imageLoadedMessage}
           setImageLoadedMessage={setImageLoadedMessage}
           setImageToUpload={setImageToUpload}
+          setImagePreview={setImagePreview}
         ></PostButtons>
       </Form.Group>
+
+      {imagePreview && <ImagePreview image={imagePreview}></ImagePreview>}
     </form>
   );
 }

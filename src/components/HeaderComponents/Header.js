@@ -10,19 +10,16 @@ export default function Header() {
   const history = useHistory();
   const [profilePicture, setProfilePicture] = useState();
   const [homeIcon, setHomeIcon] = useState();
-  const { getProfilePicture, getHomeIcon } = useStorage();
+  const { getHomeIcon, currentUserProfilePicture } = useStorage();
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    if (currentUser)
-      getProfilePicture(currentUser.email).then((res) =>
-        setProfilePicture(res)
-      );
+    if (currentUser) setProfilePicture(currentUserProfilePicture);
 
     getHomeIcon().then((res) => {
       setHomeIcon(res);
     });
-  });
+  }, [setProfilePicture, currentUser, currentUserProfilePicture, getHomeIcon]);
 
   const handleProfileClick = () => {
     history.push({

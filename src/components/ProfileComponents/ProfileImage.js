@@ -1,5 +1,6 @@
 import React from "react";
 import "./profileStyle.css";
+import { defaultImage } from "../../constants";
 
 export default function ProfileImageComponent({ profilePicture }) {
   return (
@@ -8,11 +9,7 @@ export default function ProfileImageComponent({ profilePicture }) {
       style={{ maxWidth: "200px" }}
     >
       <img
-        src={
-          profilePicture
-            ? profilePicture
-            : "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_24787.png&f=1&nofb=1"
-        }
+        src={profilePicture ? profilePicture : defaultImage}
         className="ProfilePicture rounded m-2"
         style={{ width: 180, height: 180 }}
         alt="profileImage"
