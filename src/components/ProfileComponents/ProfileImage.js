@@ -14,6 +14,7 @@ export default function ProfileImageComponent({ profilePicture }) {
         }
         className="ProfilePicture rounded m-2"
         style={{ width: 180, height: 180 }}
+        alt="profileImage"
       ></img>
     </div>
   );

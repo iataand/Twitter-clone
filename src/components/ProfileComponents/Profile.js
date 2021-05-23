@@ -11,11 +11,9 @@ import ProfileButtons from "./ProfileButtons/ProfileButtons";
 
 export default function Profile() {
   const history = useHistory();
-  const [userProfile, setUserProfile] = useState(history.location.state.user);
+  const [userProfile] = useState(history.location.state.user);
   const [profilePicture, setProfilePicture] = useState();
-  const [currentUser, setCurrentUser] = useState(
-    history.location.state.currentUser
-  );
+  const [currentUser] = useState(history.location.state.currentUser);
   const [userPosts, setUserPosts] = useState([]);
   const { logout } = useAuth();
   const { dbRef } = useDatabase();
@@ -36,7 +34,7 @@ export default function Profile() {
         setProfilePicture(res);
       }
     });
-  }, []);
+  }, [dbRef, getProfilePicture, userProfile]);
 
   const handleChangeProfileClick = () => {
     const input = document.createElement("input");

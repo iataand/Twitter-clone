@@ -41,11 +41,11 @@ export default function PostButtons({
 
       <button
         className={
-          imageLoadedMessage == false
+          imageLoadedMessage === false
             ? "btn btn-dark mr-1 disabled"
             : "btn btn-dark mr-1"
         }
-        type={imageLoadedMessage == false ? "button" : "submit"}
+        type={imageLoadedMessage === false ? "button" : "submit"}
       >
         Post
       </button>

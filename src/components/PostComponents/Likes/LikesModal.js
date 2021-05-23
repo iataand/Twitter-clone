@@ -8,8 +8,8 @@ export default function LikeSection({ usersLiked, show, handleClose }) {
       </Modal.Header>
       <Modal.Body>
         {usersLiked &&
-          usersLiked.map((user) => {
-            return <p>{user}</p>;
+          usersLiked.map((user, index) => {
+            return <p key={index}>{user}</p>;
           })}
       </Modal.Body>
       <Modal.Footer></Modal.Footer>

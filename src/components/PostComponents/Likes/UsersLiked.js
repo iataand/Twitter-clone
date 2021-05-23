@@ -10,7 +10,7 @@ export default function UsersLiked({ usersLiked, handleShow }) {
         style={{ cursor: "pointer" }}
       >
         {usersLiked.length > 0 ? (
-          usersLiked.length == 1 ? (
+          usersLiked.length === 1 ? (
             <>{usersLiked.length} like </>
           ) : (
             <>{usersLiked.length} likes </>

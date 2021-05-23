@@ -27,8 +27,6 @@ function App() {
               <Route path="/login" component={Login}></Route>
               <FeedGuard path="/feed" component={Feed}></FeedGuard>
               <ProfileGuard path="/profile" component={Profile}></ProfileGuard>
-              {/* <AuthGuard path="/profile" component={Profile}></AuthGuard> */}
-              {/* <Route path="/feed" component={Feed}></Route> */}
             </Suspense>
           </DataBaseContext>
         </StorageProvider>

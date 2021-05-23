@@ -32,7 +32,7 @@ export default function Header() {
       getProfilePicture(currentUser.email).then((res) =>
         setProfilePicture(res)
       );
-  }, [currentUser]);
+  }, [currentUser, getProfilePicture]);
 
   async function handlePost(e) {
     e.preventDefault();

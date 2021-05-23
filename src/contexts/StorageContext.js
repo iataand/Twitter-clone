@@ -19,7 +19,7 @@ export default function StorageProvider({ children }) {
       .getDownloadURL()
       .then((url) => url)
       .catch((error) => {
-        if (error.code == "storage/object-not-found") {
+        if (error.code === "storage/object-not-found") {
           return null;
         }
       });
@@ -34,7 +34,7 @@ export default function StorageProvider({ children }) {
         return url;
       })
       .catch((error) => {
-        if (error.code == "storage/object-not-found") {
+        if (error.code === "storage/object-not-found") {
           return null;
         }
       });
@@ -46,7 +46,7 @@ export default function StorageProvider({ children }) {
       .getDownloadURL()
       .then((url) => url)
       .catch((error) => {
-        if (error.code == "storage/object-not-found") {
+        if (error.code === "storage/object-not-found") {
           return null;
         }
       });

@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Profile from "../components/ProfileComponents/Profile";
 
-export default function GuardedRoute({}) {
+export default function GuardedRoute() {
   const { currentUser } = useAuth();
 
   return (

@@ -18,7 +18,7 @@ export default function Comment({
 
   useEffect(() => {
     getProfilePicture(user).then((res) => setProfilePicture(res));
-  }, []);
+  }, [getProfilePicture, user]);
 
   const handleDeleteCommentClick = () => {
     removeComment(commentId, postId);
@@ -31,7 +31,6 @@ export default function Comment({
           <CommentImage profilePicture={profilePicture}></CommentImage>
 
           <Form.Text
-            className=""
             id="postTextRef"
             className="text-wrap  text-break"
             style={{ maxWidth: "465px" }}

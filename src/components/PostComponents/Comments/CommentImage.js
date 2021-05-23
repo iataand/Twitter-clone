@@ -6,6 +6,7 @@ export default function CommentImage({ profilePicture }) {
       src={profilePicture || defaultImage}
       className="rounded m-2 text-wrap  text-break"
       style={{ width: 50, height: 50 }}
+      alt="comment"
     ></img>
   );
 }

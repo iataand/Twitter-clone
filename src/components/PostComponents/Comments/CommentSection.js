@@ -21,7 +21,7 @@ export default function CommentSection({ postId }) {
         } else setComments([]);
       }
     });
-  }, []);
+  }, [getCommsRef, postId]);
 
   const postComment = () => {
     addCommToPost(postId, comment.current.value, currentUser.email);

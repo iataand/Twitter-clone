@@ -7,6 +7,7 @@ export default function PostImage({ profilePicture, handleProfileClick }) {
         className="rounded m-2"
         style={{ width: 50, height: 50 }}
         onClick={handleProfileClick}
+        alt="profile"
       ></img>
     </div>
   );

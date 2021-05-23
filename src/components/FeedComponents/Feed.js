@@ -18,26 +18,24 @@ export default function Feed() {
         setPosts([]);
       }
     });
-  }, []);
+  }, [dbRef]);
 
   return (
     <Container className="p-1" style={{ maxWidth: "640px" }}>
       <Suspense fallback={<Spinner className="container"></Spinner>}>
         <PostSection className="border"></PostSection>
         {posts &&
-          posts.map((post, index) => {
+          posts.map((post) => {
             return (
-              <>
-                <Post
-                  key={post[0] + index}
-                  postId={post[0]}
-                  text={post[1].text}
-                  user={post[1].user}
-                  hasImage={post[1].hasImage}
-                  image={post[1].image}
-                  imageName={post[1].imageName}
-                ></Post>
-              </>
+              <Post
+                key={post[0]}
+                postId={post[0]}
+                text={post[1].text}
+                user={post[1].user}
+                hasImage={post[1].hasImage}
+                image={post[1].image}
+                imageName={post[1].imageName}
+              ></Post>
             );
           })}
       </Suspense>

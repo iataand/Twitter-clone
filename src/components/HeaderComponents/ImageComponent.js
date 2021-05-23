@@ -7,6 +7,7 @@ export default function ImageComponent({ profilePicture, handleProfileClick }) {
         src={profilePicture || defaultImage}
         onClick={handleProfileClick}
         style={{ width: "60px", height: "60px" }}
+        alt="profile"
       ></img>
     </div>
   );

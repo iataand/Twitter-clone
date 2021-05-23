@@ -58,7 +58,7 @@ export default function Post({ text, user, postId, image, imageName }) {
     });
 
     setLoading(true);
-  }, []);
+  }, [currentUser, getLikesRef, getProfilePicture, postId, user]);
 
   const handleLike = (e) => {
     e.preventDefault();

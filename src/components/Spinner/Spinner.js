@@ -6,6 +6,7 @@ export default function Spinner() {
     <img
       src={spinnerGif}
       style={{ minHeight: "10vh", maxWidth: "640px" }}
+      alt="loading..."
     ></img>
   );
 }
