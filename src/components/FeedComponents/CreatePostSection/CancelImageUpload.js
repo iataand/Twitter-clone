@@ -1,6 +1,6 @@
 import React from "react";
 import { FaRegWindowClose } from "react-icons/fa";
-import "./style.css";
+import "./createPostStyle.css";
 
 export default function CancelImageUpload({
   setImageLoadedMessage,

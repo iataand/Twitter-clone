@@ -3,7 +3,7 @@ import { useDatabase } from "../../contexts/DataBaseContext";
 import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
 import { useAuth } from "../../contexts/AuthContext";
-import "./style.css";
+import "./profileStyle.css";
 import ProfileImageComponent from "./ProfileImage";
 import ProfileText from "./ProfileText";
 import PostsSection from "./PostsSection";
@@ -58,7 +58,10 @@ export default function Profile() {
 
   return (
     <>
-      <div className="container border mt-3" style={{ maxWidth: "680px" }}>
+      <div
+        className="ProfileWrapper container border mt-3"
+        style={{ maxWidth: "680px" }}
+      >
         <ProfileImageComponent
           profilePicture={profilePicture}
         ></ProfileImageComponent>

@@ -4,7 +4,7 @@ import { useStorage } from "../../contexts/StorageContext";
 import { useAuth } from "../../contexts/AuthContext";
 import ImageComponent from "./ImageComponent";
 import HomeImage from "./HomeImage";
-import "./style.css";
+import "./headerStyle.css";
 
 export default function Header() {
   const history = useHistory();

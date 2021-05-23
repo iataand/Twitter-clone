@@ -39,12 +39,10 @@ export default function DatabaseProvider({ children }) {
       .then((snapshot) => {
         if (snapshot.exists()) {
           return snapshot.val();
-        } else {
-          console.log("No data available");
         }
       })
       .catch((error) => {
-        console.error(error);
+        alert(error);
       });
   };
 

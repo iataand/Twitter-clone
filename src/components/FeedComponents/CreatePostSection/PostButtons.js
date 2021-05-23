@@ -1,7 +1,7 @@
 import { RiImageAddFill } from "react-icons/ri";
 import { imageFailedMessage, imageSuccesMessage } from "../../../constants";
 import CancelImageUpload from "./CancelImageUpload";
-import "./style.css";
+import "./createPostStyle.css";
 
 export default function PostButtons({
   handleAttachImage,

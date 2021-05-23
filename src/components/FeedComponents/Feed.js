@@ -2,6 +2,7 @@ import React, { useEffect, useState, lazy, Suspense } from "react";
 import Spinner from "../Spinner/Spinner";
 import { Container } from "react-bootstrap";
 import { useDatabase } from "../../contexts/DataBaseContext";
+import "./feedStyle.css";
 const PostSection = lazy(() => import("./CreatePostSection/PostSection"));
 const Post = lazy(() => import("../PostComponents/Post"));
 
@@ -21,7 +22,7 @@ export default function Feed() {
   }, [dbRef]);
 
   return (
-    <Container className="p-1" style={{ maxWidth: "640px" }}>
+    <Container className="FeedWrapper p-1" style={{ maxWidth: "640px" }}>
       <Suspense fallback={<Spinner className="container"></Spinner>}>
         <PostSection className="border"></PostSection>
         {posts &&

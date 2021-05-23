@@ -17,3 +17,7 @@
   flex-direction: column;
   align-items: center;
 }
+
+.Wrapper{
+  max-width: 400px;
+}

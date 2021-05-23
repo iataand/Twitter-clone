@@ -2,11 +2,11 @@ import { defaultImage } from "../../constants";
 
 export default function ImageComponent({ profilePicture, handleProfileClick }) {
   return (
-    <div className="ProfilePic">
+    <div>
       <img
+        className="ProfilePic"
         src={profilePicture || defaultImage}
         onClick={handleProfileClick}
-        style={{ width: "60px", height: "60px" }}
         alt="profile"
       ></img>
     </div>

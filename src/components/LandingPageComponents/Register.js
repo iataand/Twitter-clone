@@ -4,7 +4,7 @@ import Icons from "./Icons.js";
 import AuthProvider, { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { useDatabase } from "../../contexts/DataBaseContext";
-import "./style.css";
+import "./landingPageStyle.css";
 
 export default function Signup() {
   const emailRef = useRef();
@@ -43,7 +43,7 @@ export default function Signup() {
         <Icons></Icons>
 
         <div className="Box d-flex align-items-center justify-content-center">
-          <div className="w-100" style={{ maxWidth: "400px" }}>
+          <div className="Wrapper w-100">
             <Card className="p-4">
               <h2 className="text-center mb-4">Register</h2>
               {error && <Alert variant="danger">{error}</Alert>}
@@ -52,11 +52,6 @@ export default function Signup() {
                 <Form.Group id="email">
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email" ref={emailRef} required />
-                </Form.Group>
-
-                <Form.Group id="username">
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control type="text" ref={username} required />
                 </Form.Group>
 
                 <Form.Group id="password">

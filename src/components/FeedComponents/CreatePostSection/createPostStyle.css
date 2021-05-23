@@ -18,3 +18,9 @@
   cursor: pointer;
   color: hsla(0, 0%, 0%, 0.719);
 }
+
+.PostUserImage{
+  width: 50px; 
+  height: 50px;
+  cursor:pointer;
+}

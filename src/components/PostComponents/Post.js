@@ -13,7 +13,7 @@ import LikeButton from "./Likes/LikeButton";
 import UsersLiked from "./Likes/UsersLiked";
 import PostText from "./PostText";
 import LikesModal from "./Likes/LikesModal";
-import "./style.css";
+import "./PostStyle.css";
 import DelePostButton from "./DelePostButton";
 
 export default function Post({ text, user, postId, image, imageName }) {

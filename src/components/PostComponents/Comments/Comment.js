@@ -29,11 +29,9 @@ export default function Comment({
       <Form className="border">
         <Form.Group className="d-flex">
           <CommentImage profilePicture={profilePicture}></CommentImage>
-
           <Form.Text
             id="postTextRef"
-            className="text-wrap  text-break"
-            style={{ maxWidth: "465px" }}
+            className="CommentText text-wrap  text-break"
           >
             <CommentText
               user={user}

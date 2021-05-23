@@ -4,7 +4,7 @@ import { Form, Card, Alert } from "react-bootstrap";
 import AuthProvider, { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import Icons from "./Icons";
-import "./style.css";
+import "./landingPageStyle.css";
 
 export default function Login() {
   const history = useHistory();
@@ -38,7 +38,7 @@ export default function Login() {
       <div className="LoginWrapper">
         <Icons></Icons>
         <Container className="d-flex align-items-center justify-content-center">
-          <div className="w-100" style={{ maxWidth: "400px" }}>
+          <div className="Wrapper w-100">
             <Card className="p-4">
               <h2 className="text-center mb-4">Log in</h2>
               {error && <Alert variant="danger">{error}</Alert>}
