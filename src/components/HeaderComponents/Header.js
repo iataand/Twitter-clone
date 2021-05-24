@@ -4,6 +4,7 @@ import { useStorage } from "../../contexts/StorageContext";
 import { useAuth } from "../../contexts/AuthContext";
 import ImageComponent from "./ImageComponent";
 import HomeImage from "./HomeImage";
+import { defaultImage } from "../../constants";
 import "./headerStyle.css";
 
 export default function Header() {
@@ -14,7 +15,8 @@ export default function Header() {
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    if (currentUser) setProfilePicture(currentUserProfilePicture);
+    if (currentUser)
+      setProfilePicture(currentUserProfilePicture || defaultImage);
 
     getHomeIcon().then((res) => {
       setHomeIcon(res);

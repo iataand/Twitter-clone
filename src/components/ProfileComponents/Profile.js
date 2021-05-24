@@ -1,28 +1,25 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect } from "react";
 import { useDatabase } from "../../contexts/DataBaseContext";
 import { useHistory } from "react-router-dom";
 import { useStorage } from "../../contexts/StorageContext";
 import { useAuth } from "../../contexts/AuthContext";
 import "./profileStyle.css";
-import { supportedImgExtensions } from "../../constants";
-import Spinner from "../Spinner/Spinner";
 import ProfileImageComponent from "./ProfileImage";
 import ProfileText from "./ProfileText";
+import PostsSection from "./PostsSection";
 import ProfileButtons from "./ProfileButtons/ProfileButtons";
-import ImageWarning from "./ImageWarning";
-const PostsSection = lazy(() => import("./PostsSection"));
 
 export default function Profile() {
   const history = useHistory();
-  const [userProfile] = useState(history.location.state.user);
+  const [userProfile, setUserProfile] = useState(history.location.state.user);
   const [profilePicture, setProfilePicture] = useState();
-  const { currentUser } = useAuth();
+  const [currentUser, setCurrentUser] = useState(
+    history.location.state.currentUser
+  );
   const [userPosts, setUserPosts] = useState([]);
-  const [imageWarning, setImageWarning] = useState();
   const { logout } = useAuth();
   const { dbRef } = useDatabase();
-  const { uploadProfilePicture, getProfilePicture, currentUserProfilePicture } =
-    useStorage();
+  const { uploadProfilePicture, getProfilePicture } = useStorage();
 
   useEffect(() => {
     dbRef
@@ -34,23 +31,12 @@ export default function Profile() {
           setUserPosts(Object.entries(data).reverse());
         } else setUserPosts([]);
       });
-  }, [dbRef, setUserPosts, userProfile]);
-
-  useEffect(() => {
-    if (currentUser.email === userProfile) {
-      setProfilePicture(currentUserProfilePicture);
-    } else {
-      getProfilePicture(userProfile).then((res) => {
+    getProfilePicture(userProfile).then((res) => {
+      if (res) {
         setProfilePicture(res);
-      });
-    }
-  }, [
-    getProfilePicture,
-    currentUser.email,
-    userProfile,
-    currentUserProfilePicture,
-    currentUser,
-  ]);
+      }
+    });
+  }, []);
 
   const handleChangeProfileClick = () => {
     const input = document.createElement("input");
@@ -60,15 +46,10 @@ export default function Profile() {
     input.onchange = (e) => {
       const files = e.target.files;
       const reader = new FileReader();
-      if (supportedImgExtensions.indexOf(files[0].type) > -1) {
-        reader.readAsDataURL(files[0]);
-        uploadProfilePicture(currentUser, files[0]).then(() =>
-          window.location.reload()
-        );
-      } else {
-        setImageWarning(true);
-        setTimeout(() => setImageWarning(false), 3000);
-      }
+      reader.readAsDataURL(files[0]);
+      uploadProfilePicture(currentUser, files[0]).then(() =>
+        window.location.reload()
+      );
     };
   };
 
@@ -79,15 +60,10 @@ export default function Profile() {
 
   return (
     <>
-      <div
-        className="ProfileWrapper container border mt-3"
-        style={{ maxWidth: "680px" }}
-      >
+      <div className="container border mt-3" style={{ maxWidth: "680px" }}>
         <ProfileImageComponent
           profilePicture={profilePicture}
         ></ProfileImageComponent>
-
-        {imageWarning && <ImageWarning></ImageWarning>}
 
         <ProfileButtons
           currentUser={currentUser}
@@ -99,12 +75,11 @@ export default function Profile() {
         <ProfileText userProfile={userProfile}></ProfileText>
 
         <hr></hr>
-        <Suspense fallback={<Spinner className="container"></Spinner>}>
-          <PostsSection
-            userPosts={userPosts}
-            profilePicture={profilePicture}
-          ></PostsSection>
-        </Suspense>
+
+        <PostsSection
+          userPosts={userPosts}
+          profilePicture={profilePicture}
+        ></PostsSection>
       </div>
     </>
   );

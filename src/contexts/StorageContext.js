@@ -1,4 +1,5 @@
 import { useContext, createContext, useState, useEffect } from "react";
+import { defaultImage } from "../constants";
 import { storage } from "../firebase";
 import { useAuth } from "./AuthContext";
 
@@ -73,7 +74,8 @@ export default function StorageProvider({ children }) {
         .child(`users/${currentUser.email}`)
         .getDownloadURL()
         .then((url) => {
-          setProfilePicture(url);
+          if (url) setProfilePicture(url);
+          else setProfilePicture(defaultImage);
         })
         .catch((error) => {
           if (error.code === "storage/object-not-found") {
