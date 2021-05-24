@@ -75,11 +75,10 @@ export default function StorageProvider({ children }) {
         .getDownloadURL()
         .then((url) => {
           if (url) setProfilePicture(url);
-          else setProfilePicture(defaultImage);
         })
         .catch((error) => {
           if (error.code === "storage/object-not-found") {
-            return null;
+            setProfilePicture(defaultImage);
           }
         });
   });
